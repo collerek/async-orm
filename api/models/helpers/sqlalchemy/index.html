@@ -1,0 +1,2031 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A simple async ORM with fastapi in mind and pydantic validation.">
+      
+      
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Sqlalchemy - ormar</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-72514911-3","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#modelshelperssqlalchemy" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="ormar" class="md-header__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ormar
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Sqlalchemy
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="ormar" class="md-nav__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ormar
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../install/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../models/" class="md-nav__link">
+        Definition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../models/inheritance/" class="md-nav__link">
+        Inheritance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../models/methods/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../models/migrations/" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../models/internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../fields/common-parameters/" class="md-nav__link">
+        Common parameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../fields/field-types/" class="md-nav__link">
+        Fields types
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../fields/pydantic-fields/" class="md-nav__link">
+        Pydantic only fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../fields/encryption/" class="md-nav__link">
+        Fields encryption
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../relations/postponed-annotations/" class="md-nav__link">
+        Postponed annotations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../relations/foreign-key/" class="md-nav__link">
+        ForeignKey
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../relations/many-to-many/" class="md-nav__link">
+        ManyToMany
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../relations/queryset-proxy/" class="md-nav__link">
+        QuerySetProxy
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Queries
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Queries" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Queries
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/" class="md-nav__link">
+        Querying database with ormar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/create/" class="md-nav__link">
+        Insert data into database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/read/" class="md-nav__link">
+        Read data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/update/" class="md-nav__link">
+        Update data in database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/delete/" class="md-nav__link">
+        Delete data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/joins-and-subqueries/" class="md-nav__link">
+        Joins and subqueries
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/filter-and-sort/" class="md-nav__link">
+        Filtering and sorting data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/select-columns/" class="md-nav__link">
+        Selecting subset of columns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/pagination-and-rows-number/" class="md-nav__link">
+        Pagination and rows number
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../queries/aggregations/" class="md-nav__link">
+        Aggregation functions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../signals/" class="md-nav__link">
+        Signals
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../transactions/" class="md-nav__link">
+        Transactions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../fastapi/" class="md-nav__link">
+        Use with Fastapi
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../mypy/" class="md-nav__link">
+        Use with mypy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../plugin/" class="md-nav__link">
+        PyCharm plugin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../releases/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" checked>
+      
+      <label class="md-nav__link" for="__nav_14">
+        Api (BETA)
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Api (BETA)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Api (BETA)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2" type="checkbox" id="__nav_14_2" checked>
+      
+      <label class="md-nav__link" for="__nav_14_2">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_2">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_1" type="checkbox" id="__nav_14_2_1" checked>
+      
+      <label class="md-nav__link" for="__nav_14_2_1">
+        Helpers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Helpers" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Helpers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../models/" class="md-nav__link">
+        Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pydantic/" class="md-nav__link">
+        Pydantic
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Sqlalchemy
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Sqlalchemy
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#adjust_through_many_to_many_model" class="md-nav__link">
+    adjust_through_many_to_many_model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create_and_append_m2m_fk" class="md-nav__link">
+    create_and_append_m2m_fk
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check_pk_column_validity" class="md-nav__link">
+    check_pk_column_validity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sqlalchemy_columns_from_model_fields" class="md-nav__link">
+    sqlalchemy_columns_from_model_fields
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_process_fields" class="md-nav__link">
+    _process_fields
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_is_through_model_not_set" class="md-nav__link">
+    _is_through_model_not_set
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_is_db_field" class="md-nav__link">
+    _is_db_field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#populate_meta_tablename_columns_and_pk" class="md-nav__link">
+    populate_meta_tablename_columns_and_pk
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check_for_null_type_columns_from_forward_refs" class="md-nav__link">
+    check_for_null_type_columns_from_forward_refs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#populate_meta_sqlalchemy_table_if_required" class="md-nav__link">
+    populate_meta_sqlalchemy_table_if_required
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update_column_definition" class="md-nav__link">
+    update_column_definition
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/" class="md-nav__link">
+        Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../related-names-validation/" class="md-nav__link">
+        Related names validation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_2" type="checkbox" id="__nav_14_2_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2_2">
+        Mixins
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Mixins" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mixins
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mixins/alias-mixin/" class="md-nav__link">
+        Alias Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mixins/excludable-mixin/" class="md-nav__link">
+        Excludable Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mixins/merge-model-mixin/" class="md-nav__link">
+        Merge Model Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mixins/prefetch-query-mixin/" class="md-nav__link">
+        Prefetch Query Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mixins/relation-mixin/" class="md-nav__link">
+        Relation Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mixins/save-prepare-mixin/" class="md-nav__link">
+        Save Prepare Mixin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-row/" class="md-nav__link">
+        Model Row
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../new-basemodel/" class="md-nav__link">
+        New BaseModel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-table-proxy/" class="md-nav__link">
+        Model Table Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-metaclass/" class="md-nav__link">
+        Model Metaclass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../excludable-items/" class="md-nav__link">
+        Excludable Items
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../traversible/" class="md-nav__link">
+        Traversible
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_3" type="checkbox" id="__nav_14_3" >
+      
+      <label class="md-nav__link" for="__nav_14_3">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_3">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fields/base-field/" class="md-nav__link">
+        Base Field
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fields/model-fields/" class="md-nav__link">
+        Model Fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fields/foreign-key/" class="md-nav__link">
+        Foreign Key
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fields/many-to-many/" class="md-nav__link">
+        Many To Many
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../fields/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_4" type="checkbox" id="__nav_14_4" >
+      
+      <label class="md-nav__link" for="__nav_14_4">
+        Query Set
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Query Set" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_4">
+          <span class="md-nav__icon md-icon"></span>
+          Query Set
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/query-set/" class="md-nav__link">
+        Query Set
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/query/" class="md-nav__link">
+        Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/prefetch-query/" class="md-nav__link">
+        Prefetch Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/join/" class="md-nav__link">
+        Join
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/clause/" class="md-nav__link">
+        Clause
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/filter-query/" class="md-nav__link">
+        Filter Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/order-query/" class="md-nav__link">
+        Order Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/limit-query/" class="md-nav__link">
+        Limit Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/offset-query/" class="md-nav__link">
+        Offset Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/field-accessor/" class="md-nav__link">
+        Field Accessor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../query-set/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_5" type="checkbox" id="__nav_14_5" >
+      
+      <label class="md-nav__link" for="__nav_14_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../relations/relation-manager/" class="md-nav__link">
+        Relation Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../relations/relation/" class="md-nav__link">
+        Relation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../relations/relation-proxy/" class="md-nav__link">
+        Relation Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../relations/queryset-proxy/" class="md-nav__link">
+        Queryset Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../relations/alias-manager/" class="md-nav__link">
+        Alias Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../relations/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_6" type="checkbox" id="__nav_14_6" >
+      
+      <label class="md-nav__link" for="__nav_14_6">
+        Signals
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Signals" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_6">
+          <span class="md-nav__icon md-icon"></span>
+          Signals
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../signals/signal/" class="md-nav__link">
+        Signal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../signals/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#adjust_through_many_to_many_model" class="md-nav__link">
+    adjust_through_many_to_many_model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create_and_append_m2m_fk" class="md-nav__link">
+    create_and_append_m2m_fk
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check_pk_column_validity" class="md-nav__link">
+    check_pk_column_validity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sqlalchemy_columns_from_model_fields" class="md-nav__link">
+    sqlalchemy_columns_from_model_fields
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_process_fields" class="md-nav__link">
+    _process_fields
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_is_through_model_not_set" class="md-nav__link">
+    _is_through_model_not_set
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_is_db_field" class="md-nav__link">
+    _is_db_field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#populate_meta_tablename_columns_and_pk" class="md-nav__link">
+    populate_meta_tablename_columns_and_pk
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check_for_null_type_columns_from_forward_refs" class="md-nav__link">
+    check_for_null_type_columns_from_forward_refs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#populate_meta_sqlalchemy_table_if_required" class="md-nav__link">
+    populate_meta_sqlalchemy_table_if_required
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update_column_definition" class="md-nav__link">
+    update_column_definition
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/collerek/ormar/edit/master/docs/api/models/helpers/sqlalchemy.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <p><a name="models.helpers.sqlalchemy"></a></p>
+<h1 id="modelshelperssqlalchemy">models.helpers.sqlalchemy</h1>
+<p><a name="models.helpers.sqlalchemy.adjust_through_many_to_many_model"></a></p>
+<h4 id="adjust_through_many_to_many_model">adjust_through_many_to_many_model</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">adjust_through_many_to_many_model</span><span class="p">(</span><span class="n">model_field</span><span class="p">:</span> <span class="s2">&quot;ManyToManyField&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+</td></tr></table>
+<p>Registers m2m relation on through model.
+Sets ormar.ForeignKey from through model to both child and parent models.
+Sets sqlalchemy.ForeignKey to both child and parent models.
+Sets pydantic fields with child and parent model types.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>model_field</code>: relation field defined in parent model
+:type model_field: ManyToManyField</li>
+</ul>
+<p><a name="models.helpers.sqlalchemy.create_and_append_m2m_fk"></a></p>
+<h4 id="create_and_append_m2m_fk">create_and_append_m2m_fk</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">create_and_append_m2m_fk</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">],</span> <span class="n">model_field</span><span class="p">:</span> <span class="s2">&quot;ManyToManyField&quot;</span><span class="p">,</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+</td></tr></table>
+<p>Registers sqlalchemy Column with sqlalchemy.ForeignKey leading to the model.</p>
+<p>Newly created field is added to m2m relation through model Meta columns and table.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>field_name</code>: name of the column to create
+:type field_name: str</li>
+<li><code>model</code>: Model class to which FK should be created
+:type model: Model class</li>
+<li><code>model_field</code>: field with ManyToMany relation
+:type model_field: ManyToManyField field</li>
+</ul>
+<p><a name="models.helpers.sqlalchemy.check_pk_column_validity"></a></p>
+<h4 id="check_pk_column_validity">check_pk_column_validity</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">check_pk_column_validity</span><span class="p">(</span><span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">field</span><span class="p">:</span> <span class="s2">&quot;BaseField&quot;</span><span class="p">,</span> <span class="n">pkname</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</code></pre></div>
+</td></tr></table>
+<p>Receives the field marked as primary key and verifies if the pkname
+was not already set (only one allowed per model) and if field is not marked
+as pydantic_only as it needs to be a database field.</p>
+<p><strong>Raises</strong>:</p>
+<ul>
+<li><code>ModelDefintionError</code>: if pkname already set or field is pydantic_only</li>
+</ul>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>field_name</code>: name of field
+:type field_name: str</li>
+<li><code>field</code>: ormar.Field
+:type field: BaseField</li>
+<li><code>pkname</code>: already set pkname
+:type pkname: Optional[str]</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>name of the field that should be set as pkname
+:rtype: str</p>
+<p><a name="models.helpers.sqlalchemy.sqlalchemy_columns_from_model_fields"></a></p>
+<h4 id="sqlalchemy_columns_from_model_fields">sqlalchemy_columns_from_model_fields</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">sqlalchemy_columns_from_model_fields</span><span class="p">(</span><span class="n">model_fields</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">new_model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">Column</span><span class="p">]]</span>
+</code></pre></div>
+</td></tr></table>
+<p>Iterates over declared on Model model fields and extracts fields that
+should be treated as database fields.</p>
+<p>If the model is empty it sets mandatory id field as primary key
+(used in through models in m2m relations).</p>
+<p>Triggers a validation of relation_names in relation fields. If multiple fields
+are leading to the same related model only one can have empty related_name param.
+Also related_names have to be unique.</p>
+<p>Trigger validation of primary_key - only one and required pk can be set,
+cannot be pydantic_only.</p>
+<p>Append fields to columns if it's not pydantic_only,
+virtual ForeignKey or ManyToMany field.</p>
+<p>Sets <code>owner</code> on each model_field as reference to newly created Model.</p>
+<p><strong>Raises</strong>:</p>
+<ul>
+<li><code>ModelDefinitionError</code>: if validation of related_names fail,
+or pkname validation fails.</li>
+</ul>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>model_fields</code>: dictionary of declared ormar model fields
+:type model_fields: Dict[str, ormar.Field]</li>
+<li><code>new_model</code>: 
+:type new_model: Model class</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>pkname, list of sqlalchemy columns
+:rtype: Tuple[Optional[str], List[sqlalchemy.Column]]</p>
+<p><a name="models.helpers.sqlalchemy._process_fields"></a></p>
+<h4 id="_process_fields">_process_fields</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">_process_fields</span><span class="p">(</span><span class="n">model_fields</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">new_model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">Column</span><span class="p">]]</span>
+</code></pre></div>
+</td></tr></table>
+<p>Helper method.</p>
+<p>Populates pkname and columns.
+Trigger validation of primary_key - only one and required pk can be set,
+cannot be pydantic_only.</p>
+<p>Append fields to columns if it's not pydantic_only,
+virtual ForeignKey or ManyToMany field.</p>
+<p>Sets <code>owner</code> on each model_field as reference to newly created Model.</p>
+<p><strong>Raises</strong>:</p>
+<ul>
+<li><code>ModelDefinitionError</code>: if validation of related_names fail,
+or pkname validation fails.</li>
+</ul>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>model_fields</code>: dictionary of declared ormar model fields
+:type model_fields: Dict[str, ormar.Field]</li>
+<li><code>new_model</code>: 
+:type new_model: Model class</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>pkname, list of sqlalchemy columns
+:rtype: Tuple[Optional[str], List[sqlalchemy.Column]]</p>
+<p><a name="models.helpers.sqlalchemy._is_through_model_not_set"></a></p>
+<h4 id="_is_through_model_not_set">_is_through_model_not_set</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">_is_through_model_not_set</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="s2">&quot;BaseField&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</code></pre></div>
+</td></tr></table>
+<p>Alias to if check that verifies if through model was created.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>field</code>: field to check
+:type field: "BaseField"</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>result of the check
+:rtype: bool</p>
+<p><a name="models.helpers.sqlalchemy._is_db_field"></a></p>
+<h4 id="_is_db_field">_is_db_field</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">_is_db_field</span><span class="p">(</span><span class="n">field</span><span class="p">:</span> <span class="s2">&quot;BaseField&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</code></pre></div>
+</td></tr></table>
+<p>Alias to if check that verifies if field should be included in database.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>field</code>: field to check
+:type field: "BaseField"</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>result of the check
+:rtype: bool</p>
+<p><a name="models.helpers.sqlalchemy.populate_meta_tablename_columns_and_pk"></a></p>
+<h4 id="populate_meta_tablename_columns_and_pk">populate_meta_tablename_columns_and_pk</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">populate_meta_tablename_columns_and_pk</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_model</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">]</span>
+</code></pre></div>
+</td></tr></table>
+<p>Sets Model tablename if it's not already set in Meta.
+Default tablename if not present is class name lower + s (i.e. Bed becomes -&gt; beds)</p>
+<p>Checks if Model's Meta have pkname and columns set.
+If not calls the sqlalchemy_columns_from_model_fields to populate
+columns from ormar.fields definitions.</p>
+<p><strong>Raises</strong>:</p>
+<ul>
+<li><code>ModelDefinitionError</code>: if pkname is not present raises ModelDefinitionError.
+Each model has to have pk.</li>
+</ul>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>name</code>: name of the current Model
+:type name: str</li>
+<li><code>new_model</code>: currently constructed Model
+:type new_model: ormar.models.metaclass.ModelMetaclass</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>Model with populated pkname and columns in Meta
+:rtype: ormar.models.metaclass.ModelMetaclass</p>
+<p><a name="models.helpers.sqlalchemy.check_for_null_type_columns_from_forward_refs"></a></p>
+<h4 id="check_for_null_type_columns_from_forward_refs">check_for_null_type_columns_from_forward_refs</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">check_for_null_type_columns_from_forward_refs</span><span class="p">(</span><span class="n">meta</span><span class="p">:</span> <span class="s2">&quot;ModelMeta&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</code></pre></div>
+</td></tr></table>
+<p>Check is any column is of NUllType() meaning it's empty column from ForwardRef</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>meta</code>: Meta class of the Model without sqlalchemy table constructed
+:type meta: Model class Meta</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>result of the check
+:rtype: bool</p>
+<p><a name="models.helpers.sqlalchemy.populate_meta_sqlalchemy_table_if_required"></a></p>
+<h4 id="populate_meta_sqlalchemy_table_if_required">populate_meta_sqlalchemy_table_if_required</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">populate_meta_sqlalchemy_table_if_required</span><span class="p">(</span><span class="n">meta</span><span class="p">:</span> <span class="s2">&quot;ModelMeta&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+</td></tr></table>
+<p>Constructs sqlalchemy table out of columns and parameters set on Meta class.
+It populates name, metadata, columns and constraints.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>meta</code>: Meta class of the Model without sqlalchemy table constructed
+:type meta: Model class Meta</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>class with populated Meta.table
+:rtype: Model class</p>
+<p><a name="models.helpers.sqlalchemy.update_column_definition"></a></p>
+<h4 id="update_column_definition">update_column_definition</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">update_column_definition</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">],</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;NewBaseModel&quot;</span><span class="p">]],</span> <span class="n">field</span><span class="p">:</span> <span class="s2">&quot;ForeignKeyField&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+</td></tr></table>
+<p>Updates a column with a new type column based on updated parameters in FK fields.</p>
+<p><strong>Arguments</strong>:</p>
+<ul>
+<li><code>model</code>: model on which columns needs to be updated
+:type model: Type["Model"]</li>
+<li><code>field</code>: field with column definition that requires update
+:type field: ForeignKeyField</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<p>None
+:rtype: None</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../relations/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Relations
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../validation/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Validation
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="../../../../javascripts/config.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2774 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A simple async ORM with fastapi in mind and pydantic validation.">
+      
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>ormar</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-72514911-3","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ormar" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="ormar" class="md-header__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ormar
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="ormar" class="md-nav__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ormar
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        Overview
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-of-the-fastapi-ecosystem" class="md-nav__link">
+    Part of the fastapi ecosystem
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrating-from-sqlalchemy" class="md-nav__link">
+    Migrating from sqlalchemy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrations-database-creation" class="md-nav__link">
+    Migrations &amp; Database creation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-versions" class="md-nav__link">
+    Package versions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asynchronous-python" class="md-nav__link">
+    Asynchronous Python
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    Quick Start
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ormar-specification" class="md-nav__link">
+    Ormar Specification
+  </a>
+  
+    <nav class="md-nav" aria-label="Ormar Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#queryset-methods" class="md-nav__link">
+    QuerySet methods
+  </a>
+  
+    <nav class="md-nav" aria-label="QuerySet methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relation-types" class="md-nav__link">
+    Relation types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-fields-types" class="md-nav__link">
+    Model fields types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-fields-options" class="md-nav__link">
+    Available fields options
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-signals" class="md-nav__link">
+    Available signals
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="install/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="models/" class="md-nav__link">
+        Definition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="models/inheritance/" class="md-nav__link">
+        Inheritance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="models/methods/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="models/migrations/" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="models/internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fields/common-parameters/" class="md-nav__link">
+        Common parameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fields/field-types/" class="md-nav__link">
+        Fields types
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fields/pydantic-fields/" class="md-nav__link">
+        Pydantic only fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fields/encryption/" class="md-nav__link">
+        Fields encryption
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="relations/postponed-annotations/" class="md-nav__link">
+        Postponed annotations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="relations/foreign-key/" class="md-nav__link">
+        ForeignKey
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="relations/many-to-many/" class="md-nav__link">
+        ManyToMany
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="relations/queryset-proxy/" class="md-nav__link">
+        QuerySetProxy
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Queries
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Queries" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Queries
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/" class="md-nav__link">
+        Querying database with ormar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/create/" class="md-nav__link">
+        Insert data into database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/read/" class="md-nav__link">
+        Read data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/update/" class="md-nav__link">
+        Update data in database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/delete/" class="md-nav__link">
+        Delete data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/joins-and-subqueries/" class="md-nav__link">
+        Joins and subqueries
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/filter-and-sort/" class="md-nav__link">
+        Filtering and sorting data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/select-columns/" class="md-nav__link">
+        Selecting subset of columns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/pagination-and-rows-number/" class="md-nav__link">
+        Pagination and rows number
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="queries/aggregations/" class="md-nav__link">
+        Aggregation functions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals/" class="md-nav__link">
+        Signals
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transactions/" class="md-nav__link">
+        Transactions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fastapi/" class="md-nav__link">
+        Use with Fastapi
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mypy/" class="md-nav__link">
+        Use with mypy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plugin/" class="md-nav__link">
+        PyCharm plugin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="releases/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      <label class="md-nav__link" for="__nav_14">
+        Api (BETA)
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Api (BETA)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Api (BETA)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2" type="checkbox" id="__nav_14_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_2">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_1" type="checkbox" id="__nav_14_2_1" >
+      
+      <label class="md-nav__link" for="__nav_14_2_1">
+        Helpers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Helpers" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Helpers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/helpers/models/" class="md-nav__link">
+        Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/helpers/pydantic/" class="md-nav__link">
+        Pydantic
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/helpers/relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/helpers/sqlalchemy/" class="md-nav__link">
+        Sqlalchemy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/helpers/validation/" class="md-nav__link">
+        Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/helpers/related-names-validation/" class="md-nav__link">
+        Related names validation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_2" type="checkbox" id="__nav_14_2_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2_2">
+        Mixins
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Mixins" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mixins
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/mixins/alias-mixin/" class="md-nav__link">
+        Alias Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/mixins/excludable-mixin/" class="md-nav__link">
+        Excludable Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/mixins/merge-model-mixin/" class="md-nav__link">
+        Merge Model Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/mixins/prefetch-query-mixin/" class="md-nav__link">
+        Prefetch Query Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/mixins/relation-mixin/" class="md-nav__link">
+        Relation Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/mixins/save-prepare-mixin/" class="md-nav__link">
+        Save Prepare Mixin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/model-row/" class="md-nav__link">
+        Model Row
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/new-basemodel/" class="md-nav__link">
+        New BaseModel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/model-table-proxy/" class="md-nav__link">
+        Model Table Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/model-metaclass/" class="md-nav__link">
+        Model Metaclass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/excludable-items/" class="md-nav__link">
+        Excludable Items
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/models/traversible/" class="md-nav__link">
+        Traversible
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_3" type="checkbox" id="__nav_14_3" >
+      
+      <label class="md-nav__link" for="__nav_14_3">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_3">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/fields/base-field/" class="md-nav__link">
+        Base Field
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/fields/model-fields/" class="md-nav__link">
+        Model Fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/fields/foreign-key/" class="md-nav__link">
+        Foreign Key
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/fields/many-to-many/" class="md-nav__link">
+        Many To Many
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/fields/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_4" type="checkbox" id="__nav_14_4" >
+      
+      <label class="md-nav__link" for="__nav_14_4">
+        Query Set
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Query Set" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_4">
+          <span class="md-nav__icon md-icon"></span>
+          Query Set
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/query-set/" class="md-nav__link">
+        Query Set
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/query/" class="md-nav__link">
+        Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/prefetch-query/" class="md-nav__link">
+        Prefetch Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/join/" class="md-nav__link">
+        Join
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/clause/" class="md-nav__link">
+        Clause
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/filter-query/" class="md-nav__link">
+        Filter Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/order-query/" class="md-nav__link">
+        Order Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/limit-query/" class="md-nav__link">
+        Limit Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/offset-query/" class="md-nav__link">
+        Offset Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/field-accessor/" class="md-nav__link">
+        Field Accessor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/query-set/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_5" type="checkbox" id="__nav_14_5" >
+      
+      <label class="md-nav__link" for="__nav_14_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/relations/relation-manager/" class="md-nav__link">
+        Relation Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/relations/relation/" class="md-nav__link">
+        Relation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/relations/relation-proxy/" class="md-nav__link">
+        Relation Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/relations/queryset-proxy/" class="md-nav__link">
+        Queryset Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/relations/alias-manager/" class="md-nav__link">
+        Alias Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/relations/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_6" type="checkbox" id="__nav_14_6" >
+      
+      <label class="md-nav__link" for="__nav_14_6">
+        Signals
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Signals" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_6">
+          <span class="md-nav__icon md-icon"></span>
+          Signals
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/signals/signal/" class="md-nav__link">
+        Signal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/signals/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-of-the-fastapi-ecosystem" class="md-nav__link">
+    Part of the fastapi ecosystem
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrating-from-sqlalchemy" class="md-nav__link">
+    Migrating from sqlalchemy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrations-database-creation" class="md-nav__link">
+    Migrations &amp; Database creation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-versions" class="md-nav__link">
+    Package versions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asynchronous-python" class="md-nav__link">
+    Asynchronous Python
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    Quick Start
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ormar-specification" class="md-nav__link">
+    Ormar Specification
+  </a>
+  
+    <nav class="md-nav" aria-label="Ormar Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#queryset-methods" class="md-nav__link">
+    QuerySet methods
+  </a>
+  
+    <nav class="md-nav" aria-label="QuerySet methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relation-types" class="md-nav__link">
+    Relation types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-fields-types" class="md-nav__link">
+    Model fields types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-fields-options" class="md-nav__link">
+    Available fields options
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-signals" class="md-nav__link">
+    Available signals
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/collerek/ormar/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="ormar">ormar</h1>
+<p>
+<a href="https://pypi.org/project/ormar">
+    <img src="https://img.shields.io/pypi/v/ormar.svg" alt="Pypi version">
+</a>
+<a href="https://pypi.org/project/ormar">
+    <img src="https://img.shields.io/pypi/pyversions/ormar.svg" alt="Pypi version">
+</a>
+<img src="https://github.com/collerek/ormar/workflows/build/badge.svg" alt="Build Status">
+<a href="https://codecov.io/gh/collerek/ormar">
+    <img src="https://codecov.io/gh/collerek/ormar/branch/master/graph/badge.svg" alt="Coverage">
+</a>
+<a href="https://www.codefactor.io/repository/github/collerek/ormar">
+<img src="https://www.codefactor.io/repository/github/collerek/ormar/badge" alt="CodeFactor" />
+</a>
+<a href="https://codeclimate.com/github/collerek/ormar/maintainability">
+<img src="https://api.codeclimate.com/v1/badges/186bc79245724864a7aa/maintainability" /></a>
+<a href="https://pepy.tech/project/ormar">
+<img src="https://pepy.tech/badge/ormar"></a>
+</p>
+
+<h3 id="overview">Overview</h3>
+<p>The <code>ormar</code> package is an async mini ORM for Python, with support for <strong>Postgres,
+MySQL</strong>, and <strong>SQLite</strong>. </p>
+<p>The main benefit of using <code>ormar</code> are:</p>
+<ul>
+<li>getting an <strong>async ORM that can be used with async frameworks</strong> (fastapi, starlette etc.)</li>
+<li>getting just <strong>one model to maintain</strong> - you don't have to maintain pydantic and other orm model (sqlalchemy, peewee, gino etc.)</li>
+</ul>
+<p>The goal was to create a simple ORM that can be <strong>used directly (as request and response models) with <a href="https://fastapi.tiangolo.com/"><code>fastapi</code></a></strong> that bases it's data validation on pydantic.</p>
+<p>Ormar - apart form obvious ORM in name - get it's name from ormar in swedish which means snakes, and ormar(e) in italian which means cabinet. </p>
+<p>And what's a better name for python ORM than snakes cabinet :)</p>
+<h3 id="documentation">Documentation</h3>
+<p>Check out the <a href="https://collerek.github.io/ormar/">documentation</a> for details.</p>
+<p><strong>Note that for brevity most of the documentation snippets omit the creation of the database
+and scheduling the execution of functions for asynchronous run.</strong></p>
+<p>If you want more real life examples than in the documentation you can see <a href="https://github.com/collerek/ormar/tree/master/tests">tests</a> folder,
+since they actually have to create and connect to database in most of the tests.</p>
+<p>Yet remember that those are - well - tests and not all solutions are suitable to be used in real life applications.</p>
+<h3 id="part-of-the-fastapi-ecosystem">Part of the <code>fastapi</code> ecosystem</h3>
+<p>As part of the fastapi ecosystem <code>ormar</code> is supported in libraries that somehow work with databases.</p>
+<p>As of now <code>ormar</code> is supported by:</p>
+<ul>
+<li><a href="https://github.com/frankie567/fastapi-users"><code>fastapi-users</code></a></li>
+<li><a href="https://github.com/awtkns/fastapi-crudrouter"><code>fastapi-crudrouter</code></a></li>
+<li><a href="https://github.com/uriyyo/fastapi-pagination"><code>fastapi-pagination</code></a></li>
+</ul>
+<p>If you maintain or use different library and would like it to support <code>ormar</code> let us know how we can help.</p>
+<h3 id="dependencies">Dependencies</h3>
+<p>Ormar is built with:</p>
+<ul>
+<li><a href="https://docs.sqlalchemy.org/en/latest/core/"><code>sqlalchemy core</code></a> for query building.</li>
+<li><a href="https://github.com/encode/databases"><code>databases</code></a> for cross-database async support.</li>
+<li><a href="https://pydantic-docs.helpmanual.io/"><code>pydantic</code></a> for data validation.</li>
+<li><code>typing_extensions</code> for python 3.6 - 3.7</li>
+</ul>
+<h3 id="migrating-from-sqlalchemy">Migrating from <code>sqlalchemy</code></h3>
+<p>If you currently use <code>sqlalchemy</code> and would like to switch to <code>ormar</code> check out the auto-translation
+tool that can help you with translating existing sqlalchemy orm models so you do not have to do it manually.</p>
+<p><strong>Beta</strong> versions available at github: <a href="https://github.com/collerek/sqlalchemy-to-ormar"><code>sqlalchemy-to-ormar</code></a>
+or simply <code>pip install sqlalchemy-to-ormar</code></p>
+<h3 id="migrations-database-creation">Migrations &amp; Database creation</h3>
+<p>Because ormar is built on SQLAlchemy core, you can use <a href="https://alembic.sqlalchemy.org/en/latest/"><code>alembic</code></a> to provide
+database migrations (and you really should for production code).</p>
+<p>For tests and basic applications the <code>sqlalchemy</code> is more than enough:
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># note this is just a partial snippet full working example below</span>
+<span class="c1"># 1. Imports</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+<span class="kn">import</span> <span class="nn">databases</span>
+
+<span class="c1"># 2. Initialization</span>
+<span class="n">DATABASE_URL</span> <span class="o">=</span> <span class="s2">&quot;sqlite:///db.sqlite&quot;</span>
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+<span class="c1"># Define models here</span>
+
+<span class="c1"># 3. Database creation and tables creation</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+<span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table></p>
+<p>For a sample configuration of alembic and more information regarding migrations and 
+database creation visit <a href="https://collerek.github.io/ormar/models/migrations/">migrations</a> documentation section.</p>
+<h3 id="package-versions">Package versions</h3>
+<p><strong>ormar is still under development:</strong>
+We recommend pinning any dependencies (with i.e. <code>ormar~=0.9.1</code>)</p>
+<p><code>ormar</code> also follows the release numeration that breaking changes bump the major number, 
+while other changes and fixes bump minor number, so with the latter you should be safe to
+update, yet always read the <a href="https://collerek.github.io/ormar/releases/">releases</a> docs before.
+<code>example: (0.5.2 -&gt; 0.6.0 - breaking, 0.5.2 -&gt; 0.5.3 - non breaking)</code>.</p>
+<h3 id="asynchronous-python">Asynchronous Python</h3>
+<p>Note that <code>ormar</code> is an asynchronous ORM, which means that you have to <code>await</code> the calls to 
+the methods, that are scheduled for execution in an event loop. Python has a builtin module
+<a href="https://docs.python.org/3/library/asyncio.html"><code>asyncio</code></a> that allows you to do just that.</p>
+<p>Note that most of "normal" python interpreters do not allow execution of <code>await</code> 
+outside of a function (cause you actually schedule this function for delayed execution 
+and don't get the result immediately).</p>
+<p>In a modern web frameworks (like <code>fastapi</code>), the framework will handle this for you, but if
+you plan to do this on your own you need to perform this manually like described in a 
+quick start below.</p>
+<h3 id="quick-start">Quick Start</h3>
+<p>Note that you can find the same script in examples folder on github.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">pydantic</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="n">DATABASE_URL</span> <span class="o">=</span> <span class="s2">&quot;sqlite:///db.sqlite&quot;</span>
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="c1"># note that this step is optional -&gt; all ormar cares is a internal</span>
+<span class="c1"># class with name Meta and proper parameters, but this way you do not</span>
+<span class="c1"># have to repeat the same parameters if you use only one database</span>
+<span class="k">class</span> <span class="nc">BaseMeta</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">ModelMeta</span><span class="p">):</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+
+<span class="c1"># Note that all type hints are optional</span>
+<span class="c1"># below is a perfectly valid model declaration</span>
+<span class="c1"># class Author(ormar.Model):</span>
+<span class="c1">#     class Meta(BaseMeta):</span>
+<span class="c1">#         tablename = &quot;authors&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#     id = ormar.Integer(primary_key=True) # &lt;= notice no field types</span>
+<span class="c1">#     name = ormar.String(max_length=100)</span>
+
+<span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">BaseMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;authors&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">BaseMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;books&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">author</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Author</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Author</span><span class="p">)</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="c1"># create the database</span>
+<span class="c1"># note that in production you should use migrations</span>
+<span class="c1"># note that this is not required if you connect to existing database</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+<span class="c1"># just to be sure we clear the db before</span>
+<span class="n">metadata</span><span class="o">.</span><span class="n">drop_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+
+<span class="c1"># all functions below are divided into functionality categories</span>
+<span class="c1"># note how all functions are defined with async - hence can use await AND needs to</span>
+<span class="c1"># be awaited on their own</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">create</span><span class="p">():</span>
+    <span class="c1"># Create some records to work with through QuerySet.create method.</span>
+    <span class="c1"># Note that queryset is exposed on each Model&#39;s class as objects</span>
+    <span class="n">tolkien</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;J.R.R. Tolkien&quot;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="n">tolkien</span><span class="p">,</span>
+                              <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Hobbit&quot;</span><span class="p">,</span>
+                              <span class="n">year</span><span class="o">=</span><span class="mi">1937</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="n">tolkien</span><span class="p">,</span>
+                              <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Lord of the Rings&quot;</span><span class="p">,</span>
+                              <span class="n">year</span><span class="o">=</span><span class="mi">1955</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="n">tolkien</span><span class="p">,</span>
+                              <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Silmarillion&quot;</span><span class="p">,</span>
+                              <span class="n">year</span><span class="o">=</span><span class="mi">1977</span><span class="p">)</span>
+
+    <span class="c1"># alternative creation of object divided into 2 steps</span>
+    <span class="n">sapkowski</span> <span class="o">=</span> <span class="n">Author</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Andrzej Sapkowski&quot;</span><span class="p">)</span>
+    <span class="c1"># do some stuff</span>
+    <span class="k">await</span> <span class="n">sapkowski</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="c1"># or save() after initialization</span>
+    <span class="k">await</span> <span class="n">Book</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="n">sapkowski</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Witcher&quot;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">1990</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">await</span> <span class="n">Book</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="n">sapkowski</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Tower of Fools&quot;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">2002</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="c1"># to read more about inserting data into the database</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/create/</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">read</span><span class="p">():</span>
+    <span class="c1"># Fetch an instance, without loading a foreign key relationship on it.</span>
+    <span class="c1"># Django style</span>
+    <span class="n">book</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Hobbit&quot;</span><span class="p">)</span>
+    <span class="c1"># or python style</span>
+    <span class="n">book</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Hobbit&quot;</span><span class="p">)</span>
+    <span class="n">book2</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+    <span class="c1"># first() fetch the instance with lower primary key value</span>
+    <span class="k">assert</span> <span class="n">book</span> <span class="o">==</span> <span class="n">book2</span>
+
+    <span class="c1"># you can access all fields on loaded model</span>
+    <span class="k">assert</span> <span class="n">book</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Hobbit&quot;</span>
+    <span class="k">assert</span> <span class="n">book</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">1937</span>
+
+    <span class="c1"># when no condition is passed to get()</span>
+    <span class="c1"># it behaves as last() based on primary key column</span>
+    <span class="n">book3</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">book3</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Tower of Fools&quot;</span>
+
+    <span class="c1"># When you have a relation, ormar always defines a related model for you</span>
+    <span class="c1"># even when all you loaded is a foreign key value like in this example</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="n">Author</span><span class="p">)</span>
+    <span class="c1"># primary key is populated from foreign key stored in books table</span>
+    <span class="k">assert</span> <span class="n">book</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">pk</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="c1"># since the related model was not loaded all other fields are None</span>
+    <span class="k">assert</span> <span class="n">book</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="c1"># Load the relationship from the database when you already have the related model</span>
+    <span class="c1"># alternatively see joins section below</span>
+    <span class="k">await</span> <span class="n">book</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">book</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;J.R.R. Tolkien&quot;</span>
+
+    <span class="c1"># get all rows for given model</span>
+    <span class="n">authors</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="c1"># to read more about reading data from the database</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/read/</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">update</span><span class="p">():</span>
+    <span class="c1"># read existing row from db</span>
+    <span class="n">tolkien</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;J.R.R. Tolkien&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tolkien</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;J.R.R. Tolkien&quot;</span>
+    <span class="n">tolkien_id</span> <span class="o">=</span> <span class="n">tolkien</span><span class="o">.</span><span class="n">id</span>
+
+    <span class="c1"># change the selected property</span>
+    <span class="n">tolkien</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;John Ronald Reuel Tolkien&quot;</span>
+    <span class="c1"># call update on a model instance</span>
+    <span class="k">await</span> <span class="n">tolkien</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="c1"># confirm that object was updated</span>
+    <span class="n">tolkien</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;John Ronald Reuel Tolkien&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tolkien</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;John Ronald Reuel Tolkien&quot;</span>
+    <span class="k">assert</span> <span class="n">tolkien</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">tolkien_id</span>
+
+    <span class="c1"># alternatively update data without loading</span>
+    <span class="k">await</span> <span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name__contains</span><span class="o">=</span><span class="s2">&quot;Tolkien&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;J.R.R. Tolkien&quot;</span><span class="p">)</span>
+
+    <span class="c1"># to read more about updating data in the database</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/update/</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">():</span>
+    <span class="n">silmarillion</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">1977</span><span class="p">)</span>
+    <span class="c1"># call delete() on instance</span>
+    <span class="k">await</span> <span class="n">silmarillion</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+    <span class="c1"># alternatively delete without loading</span>
+    <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Tower of Fools&quot;</span><span class="p">)</span>
+
+    <span class="c1"># note that when there is no record ormar raises NoMatch exception</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">1977</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ormar</span><span class="o">.</span><span class="n">NoMatch</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No book from 1977!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># to read more about deleting data from the database</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/delete/</span>
+
+    <span class="c1"># note that despite the fact that record no longer exists in database</span>
+    <span class="c1"># the object above is still accessible and you can use it (and i.e. save()) again.</span>
+    <span class="n">tolkien</span> <span class="o">=</span> <span class="n">silmarillion</span><span class="o">.</span><span class="n">author</span>
+    <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">author</span><span class="o">=</span><span class="n">tolkien</span><span class="p">,</span>
+                              <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Silmarillion&quot;</span><span class="p">,</span>
+                              <span class="n">year</span><span class="o">=</span><span class="mi">1977</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">joins</span><span class="p">():</span>
+    <span class="c1"># Tho join two models use select_related</span>
+    <span class="n">book</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span><span class="s2">&quot;author&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Hobbit&quot;</span><span class="p">)</span>
+    <span class="c1"># now the author is already prefetched</span>
+    <span class="k">assert</span> <span class="n">book</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;J.R.R. Tolkien&quot;</span>
+
+    <span class="c1"># By default you also get a second side of the relation</span>
+    <span class="c1"># constructed as lowercase source model name +&#39;s&#39; (books in this case)</span>
+    <span class="c1"># you can also provide custom name with parameter related_name</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span><span class="s2">&quot;books&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;J.R.R. Tolkien&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">author</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">books</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># for reverse and many to many relations you can also prefetch_related</span>
+    <span class="c1"># that executes a separate query for each of related models</span>
+
+    <span class="n">author</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">prefetch_related</span><span class="p">(</span><span class="s2">&quot;books&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;J.R.R. Tolkien&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">author</span><span class="o">.</span><span class="n">books</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># to read more about relations</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/relations/</span>
+
+    <span class="c1"># to read more about joins and subqueries</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/joins-and-subqueries/</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">filter_and_sort</span><span class="p">():</span>
+    <span class="c1"># to filter the query you can use filter() or pass key-value pars to</span>
+    <span class="c1"># get(), all() etc.</span>
+    <span class="c1"># to use special methods or access related model fields use double</span>
+    <span class="c1"># underscore like to filter by the name of the author use author__name</span>
+    <span class="c1"># Django style</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">author__name</span><span class="o">=</span><span class="s2">&quot;J.R.R. Tolkien&quot;</span><span class="p">)</span>
+    <span class="c1"># python style</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;J.R.R. Tolkien&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># filter can accept special methods also separated with double underscore</span>
+    <span class="c1"># to issue sql query ` where authors.name like &quot;%tolkien%&quot;` that is not</span>
+    <span class="c1"># case sensitive (hence small t in Tolkien)</span>
+    <span class="c1"># Django style</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author__name__icontains</span><span class="o">=</span><span class="s2">&quot;tolkien&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="c1"># python style</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">icontains</span><span class="p">(</span><span class="s2">&quot;tolkien&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># to sort use order_by() function of queryset</span>
+    <span class="c1"># to sort decreasing use hyphen before the field name</span>
+    <span class="c1"># same as with filter you can use double underscores to access related fields</span>
+    <span class="c1"># Django style</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">author__name__icontains</span><span class="o">=</span><span class="s2">&quot;tolkien&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+        <span class="s2">&quot;-year&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="c1"># python style</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">icontains</span><span class="p">(</span><span class="s2">&quot;tolkien&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+        <span class="n">Book</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">assert</span> <span class="n">books</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Silmarillion&quot;</span>
+    <span class="k">assert</span> <span class="n">books</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Hobbit&quot;</span>
+
+    <span class="c1"># to read more about filtering and ordering</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/filter-and-sort/</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">subset_of_columns</span><span class="p">():</span>
+    <span class="c1"># to exclude some columns from loading when querying the database</span>
+    <span class="c1"># you can use fileds() method</span>
+    <span class="n">hobbit</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">fields</span><span class="p">([</span><span class="s2">&quot;title&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Hobbit&quot;</span><span class="p">)</span>
+    <span class="c1"># note that fields not included in fields are empty (set to None)</span>
+    <span class="k">assert</span> <span class="n">hobbit</span><span class="o">.</span><span class="n">year</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">hobbit</span><span class="o">.</span><span class="n">author</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="c1"># selected field is there</span>
+    <span class="k">assert</span> <span class="n">hobbit</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Hobbit&quot;</span>
+
+    <span class="c1"># alternatively you can provide columns you want to exclude</span>
+    <span class="n">hobbit</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">exclude_fields</span><span class="p">([</span><span class="s2">&quot;year&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Hobbit&quot;</span><span class="p">)</span>
+    <span class="c1"># year is still not set</span>
+    <span class="k">assert</span> <span class="n">hobbit</span><span class="o">.</span><span class="n">year</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="c1"># but author is back</span>
+    <span class="k">assert</span> <span class="n">hobbit</span><span class="o">.</span><span class="n">author</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="c1"># also you cannot exclude primary key column - it&#39;s always there</span>
+    <span class="c1"># even if you EXPLICITLY exclude it it will be there</span>
+
+    <span class="c1"># note that each model have a shortcut for primary_key column which is pk</span>
+    <span class="c1"># and you can filter/access/set the values by this alias like below</span>
+    <span class="k">assert</span> <span class="n">hobbit</span><span class="o">.</span><span class="n">pk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="c1"># note that you cannot exclude fields that are not nullable</span>
+    <span class="c1"># (required) in model definition</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">exclude_fields</span><span class="p">([</span><span class="s2">&quot;title&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Hobbit&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot exclude non nullable field title&quot;</span><span class="p">)</span>
+
+    <span class="c1"># to read more about selecting subset of columns</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/select-columns/</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">pagination</span><span class="p">():</span>
+    <span class="c1"># to limit number of returned rows use limit()</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">books</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Hobbit&quot;</span>
+
+    <span class="c1"># to offset number of returned rows use offset()</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">books</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Lord of the Rings&quot;</span>
+
+    <span class="c1"># alternatively use paginate that combines both</span>
+    <span class="n">books</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="n">page</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">page_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="c1"># note that we removed one book of Sapkowski in delete()</span>
+    <span class="c1"># and recreated The Silmarillion - by default when no order_by is set</span>
+    <span class="c1"># ordering sorts by primary_key column</span>
+    <span class="k">assert</span> <span class="n">books</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Witcher&quot;</span>
+    <span class="k">assert</span> <span class="n">books</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;The Silmarillion&quot;</span>
+
+    <span class="c1"># to read more about pagination and number of rows</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/pagination-and-rows-number/</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">aggregations</span><span class="p">():</span>
+    <span class="c1"># count:</span>
+    <span class="k">assert</span> <span class="mi">2</span> <span class="o">==</span> <span class="k">await</span> <span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+    <span class="c1"># exists:</span>
+    <span class="k">assert</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Hobbit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+
+    <span class="c1"># max:</span>
+    <span class="k">assert</span> <span class="mi">1990</span> <span class="o">==</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">])</span>
+
+    <span class="c1"># min:</span>
+    <span class="k">assert</span> <span class="mi">1937</span> <span class="o">==</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">])</span>
+
+    <span class="c1"># avg:</span>
+    <span class="k">assert</span> <span class="mf">1964.75</span> <span class="o">==</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">])</span>
+
+    <span class="c1"># sum:</span>
+    <span class="k">assert</span> <span class="mi">7859</span> <span class="o">==</span> <span class="k">await</span> <span class="n">Book</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">])</span>
+
+    <span class="c1"># to read more about aggregated functions</span>
+    <span class="c1"># visit: https://collerek.github.io/ormar/queries/aggregations/</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">with_connect</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+    <span class="c1"># note that for any other backend than sqlite you actually need to</span>
+    <span class="c1"># connect to the database to perform db operations</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">database</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">function</span><span class="p">()</span>
+
+    <span class="c1"># note that if you use framework like `fastapi` you shouldn&#39;t connect</span>
+    <span class="c1"># in your endpoints but have a global connection pool</span>
+    <span class="c1"># check https://collerek.github.io/ormar/fastapi/ and section with db connection</span>
+
+<span class="c1"># gather and execute all functions</span>
+<span class="c1"># note - normally import should be at the beginning of the file</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="c1"># note that normally you use gather() function to run several functions</span>
+<span class="c1"># concurrently but we actually modify the data and we rely on the order of functions</span>
+<span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="p">[</span><span class="n">create</span><span class="p">,</span> <span class="n">read</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">delete</span><span class="p">,</span> <span class="n">joins</span><span class="p">,</span>
+             <span class="n">filter_and_sort</span><span class="p">,</span> <span class="n">subset_of_columns</span><span class="p">,</span>
+             <span class="n">pagination</span><span class="p">,</span> <span class="n">aggregations</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Executing: </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">with_connect</span><span class="p">(</span><span class="n">func</span><span class="p">))</span>
+
+<span class="c1"># drop the database tables</span>
+<span class="n">metadata</span><span class="o">.</span><span class="n">drop_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="ormar-specification">Ormar Specification</h2>
+<h3 id="queryset-methods">QuerySet methods</h3>
+<ul>
+<li><code>create(**kwargs): -&gt; Model</code></li>
+<li><code>get(*args, **kwargs): -&gt; Model</code></li>
+<li><code>get_or_none(*args, **kwargs): -&gt; Optional[Model]</code></li>
+<li><code>get_or_create(*args, **kwargs) -&gt; Model</code></li>
+<li><code>first(*args, **kwargs): -&gt; Model</code></li>
+<li><code>update(each: bool = False, **kwargs) -&gt; int</code></li>
+<li><code>update_or_create(**kwargs) -&gt; Model</code></li>
+<li><code>bulk_create(objects: List[Model]) -&gt; None</code></li>
+<li><code>bulk_update(objects: List[Model], columns: List[str] = None) -&gt; None</code></li>
+<li><code>delete(*args, each: bool = False, **kwargs) -&gt; int</code></li>
+<li><code>all(*args, **kwargs) -&gt; List[Optional[Model]]</code></li>
+<li><code>filter(*args, **kwargs) -&gt; QuerySet</code></li>
+<li><code>exclude(*args, **kwargs) -&gt; QuerySet</code></li>
+<li><code>select_related(related: Union[List, str]) -&gt; QuerySet</code></li>
+<li><code>prefetch_related(related: Union[List, str]) -&gt; QuerySet</code></li>
+<li><code>limit(limit_count: int) -&gt; QuerySet</code></li>
+<li><code>offset(offset: int) -&gt; QuerySet</code></li>
+<li><code>count() -&gt; int</code></li>
+<li><code>exists() -&gt; bool</code></li>
+<li><code>max(columns: List[str]) -&gt; Any</code></li>
+<li><code>min(columns: List[str]) -&gt; Any</code></li>
+<li><code>avg(columns: List[str]) -&gt; Any</code></li>
+<li><code>sum(columns: List[str]) -&gt; Any</code></li>
+<li><code>fields(columns: Union[List, str, set, dict]) -&gt; QuerySet</code></li>
+<li><code>exclude_fields(columns: Union[List, str, set, dict]) -&gt; QuerySet</code></li>
+<li><code>order_by(columns:Union[List, str]) -&gt; QuerySet</code></li>
+</ul>
+<h4 id="relation-types">Relation types</h4>
+<ul>
+<li>One to many  - with <code>ForeignKey(to: Model)</code></li>
+<li>Many to many - with <code>ManyToMany(to: Model, Optional[through]: Model)</code></li>
+</ul>
+<h4 id="model-fields-types">Model fields types</h4>
+<p>Available Model Fields (with required args - optional ones in docs):</p>
+<ul>
+<li><code>String(max_length)</code></li>
+<li><code>Text()</code></li>
+<li><code>Boolean()</code></li>
+<li><code>Integer()</code></li>
+<li><code>Float()</code></li>
+<li><code>Date()</code></li>
+<li><code>Time()</code></li>
+<li><code>DateTime()</code></li>
+<li><code>JSON()</code></li>
+<li><code>BigInteger()</code></li>
+<li><code>Decimal(scale, precision)</code></li>
+<li><code>UUID()</code></li>
+<li><code>LargeBinary(max_length)</code></li>
+<li><code>EnumField</code> - by passing <code>choices</code> to any other Field type</li>
+<li><code>EncryptedString</code> - by passing <code>encrypt_secret</code> and <code>encrypt_backend</code></li>
+<li><code>ForeignKey(to)</code></li>
+<li><code>ManyToMany(to, through)</code></li>
+</ul>
+<h3 id="available-fields-options">Available fields options</h3>
+<p>The following keyword arguments are supported on all field types.</p>
+<ul>
+<li><code>primary_key: bool</code></li>
+<li><code>nullable: bool</code></li>
+<li><code>default: Any</code></li>
+<li><code>server_default: Any</code></li>
+<li><code>index: bool</code></li>
+<li><code>unique: bool</code></li>
+<li><code>choices: typing.Sequence</code></li>
+<li><code>name: str</code></li>
+<li><code>pydantic_only: bool</code></li>
+</ul>
+<p>All fields are required unless one of the following is set:</p>
+<ul>
+<li><code>nullable</code> - Creates a nullable column. Sets the default to <code>None</code>.</li>
+<li><code>default</code> - Set a default value for the field. <strong>Not available for relation fields</strong></li>
+<li><code>server_default</code> - Set a default value for the field on server side (like sqlalchemy's <code>func.now()</code>). <strong>Not available for relation fields</strong></li>
+<li><code>primary key</code> with <code>autoincrement</code> - When a column is set to primary key and autoincrement is set on this column. 
+Autoincrement is set by default on int primary keys. </li>
+<li><code>pydantic_only</code> - Field is available only as normal pydantic field, not stored in the database.</li>
+</ul>
+<h3 id="available-signals">Available signals</h3>
+<p>Signals allow to trigger your function for a given event on a given Model.</p>
+<ul>
+<li><code>pre_save</code></li>
+<li><code>post_save</code></li>
+<li><code>pre_update</code></li>
+<li><code>post_update</code></li>
+<li><code>pre_delete</code></li>
+<li><code>post_delete</code></li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+      
+        <a href="install/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Installation
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="javascripts/config.js"></script>
+      
+    
+  </body>
+</html>

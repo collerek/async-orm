@@ -1,0 +1,3150 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A simple async ORM with fastapi in mind and pydantic validation.">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Definition - ormar</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-72514911-3","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ormar" class="md-header__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ormar
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Definition
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ormar" class="md-nav__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ormar
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Definition
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Definition
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#defining-models" class="md-nav__link">
+    Defining models
+  </a>
+  
+    <nav class="md-nav" aria-label="Defining models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-class" class="md-nav__link">
+    Model Class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-fields" class="md-nav__link">
+    Defining Fields
+  </a>
+  
+    <nav class="md-nav" aria-label="Defining Fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-field-types" class="md-nav__link">
+    Basic Field Types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-database-fields" class="md-nav__link">
+    Non Database Fields
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property-fields" class="md-nav__link">
+    Property fields
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fields-names-vs-column-names" class="md-nav__link">
+    Fields names vs Column names
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-hints-legacy" class="md-nav__link">
+    Type Hints &amp; Legacy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#databases" class="md-nav__link">
+    Databases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sqlalchemy" class="md-nav__link">
+    Sqlalchemy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practice" class="md-nav__link">
+    Best practice
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table-names" class="md-nav__link">
+    Table Names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    Constraints
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-sort-order" class="md-nav__link">
+    Model sort order
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-initialization" class="md-nav__link">
+    Model Initialization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-save-status" class="md-nav__link">
+    Model save status
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="inheritance/" class="md-nav__link">
+        Inheritance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="methods/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="migrations/" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fields/common-parameters/" class="md-nav__link">
+        Common parameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fields/field-types/" class="md-nav__link">
+        Fields types
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fields/pydantic-fields/" class="md-nav__link">
+        Pydantic only fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fields/encryption/" class="md-nav__link">
+        Fields encryption
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/postponed-annotations/" class="md-nav__link">
+        Postponed annotations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/foreign-key/" class="md-nav__link">
+        ForeignKey
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/many-to-many/" class="md-nav__link">
+        ManyToMany
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/queryset-proxy/" class="md-nav__link">
+        QuerySetProxy
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Queries
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Queries" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Queries
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/" class="md-nav__link">
+        Querying database with ormar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/create/" class="md-nav__link">
+        Insert data into database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/read/" class="md-nav__link">
+        Read data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/update/" class="md-nav__link">
+        Update data in database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/delete/" class="md-nav__link">
+        Delete data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/joins-and-subqueries/" class="md-nav__link">
+        Joins and subqueries
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/filter-and-sort/" class="md-nav__link">
+        Filtering and sorting data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/select-columns/" class="md-nav__link">
+        Selecting subset of columns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/pagination-and-rows-number/" class="md-nav__link">
+        Pagination and rows number
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries/aggregations/" class="md-nav__link">
+        Aggregation functions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../signals/" class="md-nav__link">
+        Signals
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transactions/" class="md-nav__link">
+        Transactions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fastapi/" class="md-nav__link">
+        Use with Fastapi
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mypy/" class="md-nav__link">
+        Use with mypy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin/" class="md-nav__link">
+        PyCharm plugin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../releases/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      <label class="md-nav__link" for="__nav_14">
+        Api (BETA)
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Api (BETA)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Api (BETA)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2" type="checkbox" id="__nav_14_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_2">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_1" type="checkbox" id="__nav_14_2_1" >
+      
+      <label class="md-nav__link" for="__nav_14_2_1">
+        Helpers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Helpers" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Helpers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/helpers/models/" class="md-nav__link">
+        Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/helpers/pydantic/" class="md-nav__link">
+        Pydantic
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/helpers/relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/helpers/sqlalchemy/" class="md-nav__link">
+        Sqlalchemy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/helpers/validation/" class="md-nav__link">
+        Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/helpers/related-names-validation/" class="md-nav__link">
+        Related names validation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_2" type="checkbox" id="__nav_14_2_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2_2">
+        Mixins
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Mixins" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mixins
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/mixins/alias-mixin/" class="md-nav__link">
+        Alias Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/mixins/excludable-mixin/" class="md-nav__link">
+        Excludable Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/mixins/merge-model-mixin/" class="md-nav__link">
+        Merge Model Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/mixins/prefetch-query-mixin/" class="md-nav__link">
+        Prefetch Query Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/mixins/relation-mixin/" class="md-nav__link">
+        Relation Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/mixins/save-prepare-mixin/" class="md-nav__link">
+        Save Prepare Mixin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/model-row/" class="md-nav__link">
+        Model Row
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/new-basemodel/" class="md-nav__link">
+        New BaseModel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/model-table-proxy/" class="md-nav__link">
+        Model Table Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/model-metaclass/" class="md-nav__link">
+        Model Metaclass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/excludable-items/" class="md-nav__link">
+        Excludable Items
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/models/traversible/" class="md-nav__link">
+        Traversible
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_3" type="checkbox" id="__nav_14_3" >
+      
+      <label class="md-nav__link" for="__nav_14_3">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_3">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/fields/base-field/" class="md-nav__link">
+        Base Field
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/fields/model-fields/" class="md-nav__link">
+        Model Fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/fields/foreign-key/" class="md-nav__link">
+        Foreign Key
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/fields/many-to-many/" class="md-nav__link">
+        Many To Many
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/fields/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_4" type="checkbox" id="__nav_14_4" >
+      
+      <label class="md-nav__link" for="__nav_14_4">
+        Query Set
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Query Set" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_4">
+          <span class="md-nav__icon md-icon"></span>
+          Query Set
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/query-set/" class="md-nav__link">
+        Query Set
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/query/" class="md-nav__link">
+        Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/prefetch-query/" class="md-nav__link">
+        Prefetch Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/join/" class="md-nav__link">
+        Join
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/clause/" class="md-nav__link">
+        Clause
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/filter-query/" class="md-nav__link">
+        Filter Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/order-query/" class="md-nav__link">
+        Order Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/limit-query/" class="md-nav__link">
+        Limit Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/offset-query/" class="md-nav__link">
+        Offset Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/field-accessor/" class="md-nav__link">
+        Field Accessor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/query-set/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_5" type="checkbox" id="__nav_14_5" >
+      
+      <label class="md-nav__link" for="__nav_14_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/relations/relation-manager/" class="md-nav__link">
+        Relation Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/relations/relation/" class="md-nav__link">
+        Relation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/relations/relation-proxy/" class="md-nav__link">
+        Relation Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/relations/queryset-proxy/" class="md-nav__link">
+        Queryset Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/relations/alias-manager/" class="md-nav__link">
+        Alias Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/relations/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_6" type="checkbox" id="__nav_14_6" >
+      
+      <label class="md-nav__link" for="__nav_14_6">
+        Signals
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Signals" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_6">
+          <span class="md-nav__icon md-icon"></span>
+          Signals
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/signals/signal/" class="md-nav__link">
+        Signal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/signals/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#defining-models" class="md-nav__link">
+    Defining models
+  </a>
+  
+    <nav class="md-nav" aria-label="Defining models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-class" class="md-nav__link">
+    Model Class
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-fields" class="md-nav__link">
+    Defining Fields
+  </a>
+  
+    <nav class="md-nav" aria-label="Defining Fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-field-types" class="md-nav__link">
+    Basic Field Types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-database-fields" class="md-nav__link">
+    Non Database Fields
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property-fields" class="md-nav__link">
+    Property fields
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fields-names-vs-column-names" class="md-nav__link">
+    Fields names vs Column names
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-hints-legacy" class="md-nav__link">
+    Type Hints &amp; Legacy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#databases" class="md-nav__link">
+    Databases
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sqlalchemy" class="md-nav__link">
+    Sqlalchemy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practice" class="md-nav__link">
+    Best practice
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table-names" class="md-nav__link">
+    Table Names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    Constraints
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-sort-order" class="md-nav__link">
+    Model sort order
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-initialization" class="md-nav__link">
+    Model Initialization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-save-status" class="md-nav__link">
+    Model save status
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/collerek/ormar/edit/master/docs/models/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="models">Models</h1>
+<h2 id="defining-models">Defining models</h2>
+<p>By defining an ormar Model you get corresponding <strong>Pydantic model</strong> as well as <strong>Sqlalchemy table</strong> for free.
+They are being managed in the background and you do not have to create them on your own.</p>
+<h3 id="model-class">Model Class</h3>
+<p>To build an ormar model you simply need to inherit a <code>ormar.Model</code> class.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="hll"><span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+</span>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="defining-fields">Defining Fields</h3>
+<p>Next assign one or more of the <a href="../fields/field-types/">Fields</a> as a class level variables.</p>
+<h4 id="basic-field-types">Basic Field Types</h4>
+<p>Each table <strong>has to</strong> have a primary key column, which you specify by setting <code>primary_key=True</code> on selected field.</p>
+<p>Only one primary key column is allowed.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+<span class="hll">    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Not assigning <code>primary_key</code> column or assigning more than one column per <code>Model</code> will raise <code>ModelDefinitionError</code>
+exception.</p>
+</div>
+<p>By default if you assign primary key to <code>Integer</code> field, the <code>autoincrement</code> option is set to true.</p>
+<p>You can disable by passing <code>autoincremant=False</code>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h4 id="non-database-fields">Non Database Fields</h4>
+<p>Note that if you need a normal pydantic field in your model (used to store value on model or pass around some value) you can define a 
+field with parameter <code>pydantic_only=True</code>.</p>
+<p>Fields created like this are added to the <code>pydantic</code> model fields -&gt; so are subject to validation according to <code>Field</code> type, 
+also appear in <code>dict()</code> and <code>json()</code> result. </p>
+<p>The difference is that <strong>those fields are not saved in the database</strong>. So they won't be included in underlying sqlalchemy <code>columns</code>, 
+or <code>table</code> variables (check <a href="internals/">Internals</a> section below to see how you can access those if you need).</p>
+<p>Subsequently <code>pydantic_only</code> fields won't be included in migrations or any database operation (like <code>save</code>, <code>update</code> etc.)</p>
+<p>Fields like those can be passed around into payload in <code>fastapi</code> request and will be returned in <code>fastapi</code> response 
+(of course only if you set their value somewhere in your code as the value is <strong>not</strong> fetched from the db. 
+If you pass a value in <code>fastapi</code> <code>request</code> and return the same instance that <code>fastapi</code> constructs for you in <code>request_model</code>
+you should get back exactly same value in <code>response</code>.).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>pydantic_only=True</code> fields are always <strong>Optional</strong> and it cannot be changed (otherwise db load validation would fail)</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>pydantic_only=True</code> fields are a good solution if you need to pass additional information from outside of your API 
+(i.e. frontend). They are not stored in db but you can access them in your <code>APIRoute</code> code and they also have <code>pydantic</code> validation. </p>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="hll">    <span class="n">non_db_field</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">pydantic_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table>
+<p>If you combine <code>pydantic_only=True</code> field with <code>default</code> parameter and do not pass actual value in request you will always get default value.
+Since it can be a function you can set <code>default=datetime.datetime.now</code> and get current timestamp each time you call an endpoint etc.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that both <code>pydantic_only</code> and <code>property_field</code> decorated field can be included/excluded in both <code>dict()</code> and <code>fastapi</code>
+response with <code>include</code>/<code>exclude</code> and <code>response_model_include</code>/<code>response_model_exclude</code> accordingly.</p>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># &lt;==related of code removed for clarity==&gt;</span>
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;users2&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">category</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span>
+        <span class="n">pydantic_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span>
+    <span class="p">)</span>
+
+<span class="c1"># &lt;==related of code removed for clarity==&gt;</span>
+<span class="n">app</span> <span class="o">=</span><span class="n">FastAPI</span><span class="p">()</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/users/&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="n">user</span><span class="p">:</span> <span class="n">User</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="c1"># &lt;==related of code removed for clarity==&gt;</span>
+
+<span class="k">def</span> <span class="nf">test_excluding_fields_in_endpoints</span><span class="p">():</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">client</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;test@domain.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;^*^%A*DA*IAAA&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">timestamp</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/users/&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="p">[</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;first_name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;last_name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;category&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="c1"># returned is the same timestamp</span>
+        <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># &lt;==related of code removed for clarity==&gt;</span>
+</code></pre></div>
+</td></tr></table>
+<h4 id="property-fields">Property fields</h4>
+<p>Sometimes it's desirable to do some kind of calculation on the model instance. One of the most common examples can be concatenating
+two or more fields. Imagine you have <code>first_name</code> and <code>last_name</code> fields on your model, but would like to have <code>full_name</code> in the result
+of the <code>fastapi</code> query. </p>
+<p>You can create a new <code>pydantic</code> model with a <code>method</code> that accepts only <code>self</code> (so like default python <code>@property</code>) 
+and populate it in your code. </p>
+<p>But it's so common that <code>ormar</code> has you covered. You can "materialize" a <code>property_field</code> on you <code>Model</code>.   </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>property_field</code> fields are always <strong>Optional</strong> and it cannot be changed (otherwise db load validation would fail)</p>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+<span class="kn">from</span> <span class="nn">ormar</span> <span class="kn">import</span> <span class="n">property_field</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="hll">    <span class="nd">@property_field</span>
+</span><span class="hll">    <span class="k">def</span> <span class="nf">prefixed_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="hll">        <span class="k">return</span> <span class="s1">&#39;custom_prefix__&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+</span></code></pre></div>
+</td></tr></table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The decorated function has to accept only one parameter, and that parameter have to be <code>self</code>. </p>
+<p>If you try to decorate a function with more parameters <code>ormar</code> will raise <code>ModelDefinitionError</code>.</p>
+<p>Sample:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># will raise ModelDefinitionError</span>
+<span class="nd">@property_field</span>
+<span class="k">def</span> <span class="nf">prefixed_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;prefix_&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;custom_prefix__&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<span class="c1"># will raise ModelDefinitionError </span>
+<span class="c1"># (calling first param something else than &#39;self&#39; is a bad practice anyway)</span>
+<span class="nd">@property_field</span>
+<span class="k">def</span> <span class="nf">prefixed_name</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;custom_prefix__&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+<p>Note that <code>property_field</code> decorated methods do not go through verification (but that might change in future) and are only available
+in the response from <code>fastapi</code> and <code>dict()</code> and <code>json()</code> methods. You cannot pass a value for this field in the request 
+(or rather you can but it will be discarded by ormar so really no point but no Exception will be raised).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that both <code>pydantic_only</code> and <code>property_field</code> decorated field can be included/excluded in both <code>dict()</code> and <code>fastapi</code>
+response with <code>include</code>/<code>exclude</code> and <code>response_model_include</code>/<code>response_model_exclude</code> accordingly.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Note that <code>@property_field</code> decorator is designed to replace the python <code>@property</code> decorator, you do not have to combine them.</p>
+<p>In theory you can cause <code>ormar</code> have a failsafe mechanism, but note that i.e. <code>mypy</code> will complain about re-decorating a property.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># valid and working but unnecessary and mypy will complain</span>
+<span class="nd">@property_field</span>
+<span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">prefixed_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;custom_prefix__&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># &lt;==related of code removed for clarity==&gt;</span>
+<span class="k">def</span> <span class="nf">gen_pass</span><span class="p">():</span>  <span class="c1"># note: NOT production ready </span>
+    <span class="n">choices</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="s2">&quot;!@#$%^&amp;*()&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">choices</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">RandomModel</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;random_users&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+        <span class="n">include_props_in_dict</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">gen_pass</span><span class="p">)</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">)</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">created_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span>
+        <span class="n">server_default</span><span class="o">=</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="nd">@property_field</span>
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span><span class="p">])</span>
+
+<span class="c1"># &lt;==related of code removed for clarity==&gt;</span>
+<span class="n">app</span> <span class="o">=</span><span class="n">FastAPI</span><span class="p">()</span>
+
+<span class="c1"># explicitly exclude property_field in this endpoint</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/random/&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">RandomModel</span><span class="p">,</span> <span class="n">response_model_exclude</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;full_name&quot;</span><span class="p">})</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="n">user</span><span class="p">:</span> <span class="n">RandomModel</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">await</span> <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="c1"># &lt;==related of code removed for clarity==&gt;</span>
+
+<span class="k">def</span> <span class="nf">test_excluding_property_field_in_endpoints2</span><span class="p">():</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">client</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">RandomModel</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">include_props_in_dict</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">user3</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Test&quot;</span><span class="p">}</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/random3/&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">user3</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="p">[</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;password&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;first_name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;last_name&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;created_date&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="c1"># despite being decorated with property_field if you explictly exclude it it will be gone</span>
+        <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;full_name&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+<span class="c1"># &lt;==related of code removed for clarity==&gt;</span>
+</code></pre></div>
+</td></tr></table>
+<h4 id="fields-names-vs-column-names">Fields names vs Column names</h4>
+<p>By default names of the fields will be used for both the underlying <code>pydantic</code> model and <code>sqlalchemy</code> table.</p>
+<p>If for whatever reason you prefer to change the name in the database but keep the name in the model you can do this 
+with specifying <code>name</code> parameter during Field declaration</p>
+<p>Here you have a sample model with changed names
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///test.db&quot;</span><span class="p">,</span> <span class="n">force_rollback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;children&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+<span class="hll">    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;child_id&quot;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;fname&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;lname&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">born_year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;year_born&quot;</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table></p>
+<p>Note that you can also change the ForeignKey column name
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+<span class="kn">from</span> <span class="nn">.docs010</span> <span class="kn">import</span> <span class="n">Artist</span>  <span class="c1"># previous example</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///test.db&quot;</span><span class="p">,</span> <span class="n">force_rollback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Album</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;music_albums&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;album_id&quot;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;album_name&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="hll">    <span class="n">artist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Artist</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Artist</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;artist_id&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table></p>
+<p>But for now you cannot change the ManyToMany column names as they go through other Model anyway.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+<span class="kn">from</span> <span class="nn">.docs008</span> <span class="kn">import</span> <span class="n">Child</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///test.db&quot;</span><span class="p">,</span> <span class="n">force_rollback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">ArtistChildren</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;children_x_artists&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+
+<span class="k">class</span> <span class="nc">Artist</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;artists&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;artist_id&quot;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;fname&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;lname&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">born_year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">)</span>
+<span class="hll">    <span class="n">children</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ManyToMany</span><span class="p">(</span><span class="n">Child</span><span class="p">,</span> <span class="n">through</span><span class="o">=</span><span class="n">ArtistChildren</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table></p>
+<h3 id="type-hints-legacy">Type Hints &amp; Legacy</h3>
+<p>Before version 0.4.0 <code>ormar</code> supported only one way of defining <code>Fields</code> on a <code>Model</code> using python type hints as pydantic.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+<span class="hll">    <span class="nb">id</span><span class="p">:</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">name</span><span class="p">:</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">completed</span><span class="p">:</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span>
+<span class="n">c1</span> <span class="o">=</span> <span class="n">Course</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<p>But that didn't play well with static type checkers like <code>mypy</code> and <code>pydantic</code> PyCharm plugin.</p>
+<p>Therefore from version &gt;=0.4.0 <code>ormar</code> switched to new notation.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+<span class="hll">    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table>
+<p>Note that type hints are <strong>optional</strong> so perfectly valid <code>ormar</code> code can look like this:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+<span class="hll">    <span class="nb">id</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">name</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">completed</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Even if you use type hints <strong><code>ormar</code> does not use them to construct <code>pydantic</code> fields!</strong></p>
+<p>Type hints are there only to support static checkers and linting, 
+<code>ormar</code> construct annotations used by <code>pydantic</code> from own fields.</p>
+</div>
+<h3 id="dependencies">Dependencies</h3>
+<p>Since ormar depends on <a href="https://github.com/encode/databases"><code>databases</code></a> and <a href="https://docs.sqlalchemy.org/en/latest/core/"><code>sqlalchemy-core</code></a> for database connection 
+and table creation you need to assign each <code>Model</code> with two special parameters.</p>
+<h4 id="databases">Databases</h4>
+<p>One is <code>Database</code> instance created with your database url in <a href="https://docs.sqlalchemy.org/en/13/core/engines.html#database-urls">sqlalchemy connection string</a> format.</p>
+<p>Created instance needs to be passed to every <code>Model</code> with <code>Meta</code> class <code>database</code> parameter.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="hll"><span class="kn">import</span> <span class="nn">databases</span>
+</span><span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="hll"><span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<span class="hll">        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+</span>        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You need to create the <code>Database</code> instance <strong>only once</strong> and use it for all models. 
+You can create several ones if you want to use multiple databases.</p>
+</div>
+<h4 id="sqlalchemy">Sqlalchemy</h4>
+<p>Second dependency is sqlalchemy <code>MetaData</code> instance.</p>
+<p>Created instance needs to be passed to every <code>Model</code> with <code>Meta</code> class <code>metadata</code> parameter.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="hll"><span class="kn">import</span> <span class="nn">sqlalchemy</span>
+</span>
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="hll"><span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+</span>
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+<span class="hll">        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You need to create the <code>MetaData</code> instance <strong>only once</strong> and use it for all models. 
+You can create several ones if you want to use multiple databases.</p>
+</div>
+<h4 id="best-practice">Best practice</h4>
+<p>Only thing that <code>ormar</code> expects is a class with name <code>Meta</code> and two class variables: <code>metadata</code> and <code>databases</code>.</p>
+<p>So instead of providing the same parameters over and over again for all models you should creata a class and subclass it in all models.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///test.db&quot;</span><span class="p">,</span> <span class="n">force_rollback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="c1"># note that you do not have to subclass ModelMeta,</span>
+<span class="c1"># it&#39;s useful for type hints and code completion</span>
+<span class="hll"><span class="k">class</span> <span class="nc">MainMeta</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">ModelMeta</span><span class="p">):</span>
+</span>    <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+
+<span class="k">class</span> <span class="nc">Artist</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="hll">    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">MainMeta</span><span class="p">):</span>
+</span>        <span class="c1"># note that tablename is optional</span>
+        <span class="c1"># if not provided ormar will user class.__name__.lower()+&#39;s&#39;</span>
+        <span class="c1"># -&gt; artists in this example</span>
+        <span class="k">pass</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">born_year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Album</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="hll">    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">MainMeta</span><span class="p">):</span>
+</span>        <span class="k">pass</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">artist</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Artist</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Artist</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You need to subclass your <code>MainMeta</code> class in each <code>Model</code> class as those classes store configuration variables 
+that otherwise would be overwritten by each <code>Model</code>.</p>
+</div>
+<h3 id="table-names">Table Names</h3>
+<p>By default table name is created from Model class name as lowercase name plus 's'.</p>
+<p>You can overwrite this parameter by providing <code>Meta</code> class <code>tablename</code> argument.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<span class="hll">        <span class="c1"># if you omit this parameter it will be created automatically</span>
+</span><span class="hll">        <span class="c1"># as class.__name__.lower()+&#39;s&#39; -&gt; &quot;courses&quot; in this example</span>
+</span><span class="hll">        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;my_courses&quot;</span>
+</span>        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="constraints">Constraints</h3>
+<p>On a model level you can also set model-wise constraints on sql columns.</p>
+<p>Right now only <code>UniqueColumns</code> constraint is present. </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To read more about columns constraints like <code>primary_key</code>, <code>unique</code>, <code>ForeignKey</code> etc. visit <a href="../fields/field-types/">fields</a>.</p>
+</div>
+<p>You can set this parameter by providing <code>Meta</code> class <code>constraints</code> argument.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+<span class="hll">        <span class="c1"># define your constraints in Meta class of the model</span>
+</span><span class="hll">        <span class="c1"># it&#39;s a list that can contain multiple constraints</span>
+</span><span class="hll">        <span class="c1"># hera a combination of name and column will have to be unique in db</span>
+</span><span class="hll">        <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">ormar</span><span class="o">.</span><span class="n">UniqueColumns</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;completed&quot;</span><span class="p">)]</span>
+</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="model-sort-order">Model sort order</h2>
+<p>When querying the database with given model by default the Model is ordered by the <code>primary_key</code>
+column ascending. If you wish to change the default behaviour you can do it by providing <code>orders_by</code>
+parameter to model <code>Meta</code> class.</p>
+<p>Sample default ordering:
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">BaseMeta</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">ModelMeta</span><span class="p">):</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+<span class="c1"># default sort by column id ascending</span>
+<span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">BaseMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;authors&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+Modified
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">BaseMeta</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">ModelMeta</span><span class="p">):</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+<span class="c1"># now default sort by name descending</span>
+<span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">BaseMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;authors&quot;</span>
+        <span class="n">orders_by</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table></p>
+<h2 id="model-initialization">Model Initialization</h2>
+<p>There are two ways to create and persist the <code>Model</code> instance in the database.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <code>ipython</code> to try this from the console, since it supports <code>await</code>.</p>
+</div>
+<p>If you plan to modify the instance in the later execution of your program you can initiate your <code>Model</code> as a normal class and later await a <code>save()</code> call.  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="hll"><span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Painting for dummies&quot;</span><span class="p">,</span> <span class="n">completed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span class="hll"><span class="k">await</span> <span class="n">course</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</span>
+<span class="k">await</span> <span class="n">Course</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Painting for dummies&quot;</span><span class="p">,</span> <span class="n">completed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>If you want to initiate your <code>Model</code> and at the same time save in in the database use a QuerySet's method <code>create()</code>.</p>
+<p>For creating multiple objects at once a <code>bulk_create()</code> QuerySet's method is available.</p>
+<p>Each model has a <code>QuerySet</code> initialised as <code>objects</code> parameter </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">databases</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">ormar</span>
+
+<span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="s2">&quot;sqlite:///db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="n">course</span> <span class="o">=</span> <span class="n">Course</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Painting for dummies&quot;</span><span class="p">,</span> <span class="n">completed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">course</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="hll"><span class="k">await</span> <span class="n">Course</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Painting for dummies&quot;</span><span class="p">,</span> <span class="n">completed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+</td></tr></table>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To read more about <code>QuerySets</code> (including bulk operations) and available methods visit <a href="../queries/">queries</a></p>
+</div>
+<h2 id="model-save-status"><code>Model</code> save status</h2>
+<p>Each model instance is a separate python object and they do not know anything about each other.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">track1</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Track</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="n">track2</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Track</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">track1</span> <span class="o">==</span> <span class="n">track2</span> <span class="c1"># True</span>
+
+<span class="n">track1</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;The Bird2&#39;</span>
+<span class="k">await</span> <span class="n">track1</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">track1</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">track2</span><span class="o">.</span><span class="n">name</span> <span class="c1"># False</span>
+<span class="c1"># track2 does not update and knows nothing about track1</span>
+</code></pre></div>
+</td></tr></table>
+<p>The objects itself have a saved status, which is set as following:</p>
+<ul>
+<li>Model is saved after <code>save/update/load/upsert</code> method on model</li>
+<li>Model is saved after <code>create/get/first/all/get_or_create/update_or_create</code> method</li>
+<li>Model is saved when passed to <code>bulk_update</code> and <code>bulk_create</code></li>
+<li>Model is saved after <code>adding/removing</code> <code>ManyToMany</code> related objects (through model instance auto saved/deleted)</li>
+<li>Model is <strong>not</strong> saved after change of any own field (including <code>pk</code> as <code>Model.pk</code> alias)</li>
+<li>Model is <strong>not</strong> saved after adding/removing <code>ForeignKey</code> related object (fk column not saved)</li>
+<li>Model is <strong>not</strong> saved after instantiation with <code>__init__</code> (w/o <code>QuerySet.create</code> or before calling <code>save</code>)</li>
+</ul>
+<p>You can check if model is saved with <code>ModelInstance.saved</code> property</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../install/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Installation
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="inheritance/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Inheritance
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="../javascripts/config.js"></script>
+      
+    
+  </body>
+</html>

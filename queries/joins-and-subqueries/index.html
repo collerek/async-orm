@@ -1,0 +1,2522 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A simple async ORM with fastapi in mind and pydantic validation.">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Joins and subqueries - ormar</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-72514911-3","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#joins-and-subqueries" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ormar" class="md-header__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ormar
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Joins and subqueries
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ormar" class="md-nav__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ormar
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/" class="md-nav__link">
+        Definition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/inheritance/" class="md-nav__link">
+        Inheritance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/methods/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/migrations/" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/common-parameters/" class="md-nav__link">
+        Common parameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/field-types/" class="md-nav__link">
+        Fields types
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/pydantic-fields/" class="md-nav__link">
+        Pydantic only fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/encryption/" class="md-nav__link">
+        Fields encryption
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/postponed-annotations/" class="md-nav__link">
+        Postponed annotations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/foreign-key/" class="md-nav__link">
+        ForeignKey
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/many-to-many/" class="md-nav__link">
+        ManyToMany
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/queryset-proxy/" class="md-nav__link">
+        QuerySetProxy
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      <label class="md-nav__link" for="__nav_6">
+        Queries
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Queries" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Queries
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Querying database with ormar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create/" class="md-nav__link">
+        Insert data into database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../read/" class="md-nav__link">
+        Read data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update/" class="md-nav__link">
+        Update data in database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delete/" class="md-nav__link">
+        Delete data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Joins and subqueries
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Joins and subqueries
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#select_related" class="md-nav__link">
+    select_related
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select_all" class="md-nav__link">
+    select_all
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prefetch_related" class="md-nav__link">
+    prefetch_related
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select_related-vs-prefetch_related" class="md-nav__link">
+    select_related vs prefetch_related
+  </a>
+  
+    <nav class="md-nav" aria-label="select_related vs prefetch_related">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    Performance
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    Memory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-methods" class="md-nav__link">
+    Model methods
+  </a>
+  
+    <nav class="md-nav" aria-label="Model methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load" class="md-nav__link">
+    load
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#querysetproxy-methods" class="md-nav__link">
+    QuerysetProxy methods
+  </a>
+  
+    <nav class="md-nav" aria-label="QuerysetProxy methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select_related_1" class="md-nav__link">
+    select_related
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select_all_1" class="md-nav__link">
+    select_all
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prefetch_related_1" class="md-nav__link">
+    prefetch_related
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../filter-and-sort/" class="md-nav__link">
+        Filtering and sorting data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../select-columns/" class="md-nav__link">
+        Selecting subset of columns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pagination-and-rows-number/" class="md-nav__link">
+        Pagination and rows number
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aggregations/" class="md-nav__link">
+        Aggregation functions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../signals/" class="md-nav__link">
+        Signals
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../transactions/" class="md-nav__link">
+        Transactions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fastapi/" class="md-nav__link">
+        Use with Fastapi
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mypy/" class="md-nav__link">
+        Use with mypy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin/" class="md-nav__link">
+        PyCharm plugin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      <label class="md-nav__link" for="__nav_14">
+        Api (BETA)
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Api (BETA)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Api (BETA)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2" type="checkbox" id="__nav_14_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_2">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_1" type="checkbox" id="__nav_14_2_1" >
+      
+      <label class="md-nav__link" for="__nav_14_2_1">
+        Helpers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Helpers" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Helpers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/models/" class="md-nav__link">
+        Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/pydantic/" class="md-nav__link">
+        Pydantic
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/sqlalchemy/" class="md-nav__link">
+        Sqlalchemy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/validation/" class="md-nav__link">
+        Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/related-names-validation/" class="md-nav__link">
+        Related names validation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_2" type="checkbox" id="__nav_14_2_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2_2">
+        Mixins
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Mixins" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mixins
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/alias-mixin/" class="md-nav__link">
+        Alias Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/excludable-mixin/" class="md-nav__link">
+        Excludable Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/merge-model-mixin/" class="md-nav__link">
+        Merge Model Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/prefetch-query-mixin/" class="md-nav__link">
+        Prefetch Query Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/relation-mixin/" class="md-nav__link">
+        Relation Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/save-prepare-mixin/" class="md-nav__link">
+        Save Prepare Mixin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-row/" class="md-nav__link">
+        Model Row
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/new-basemodel/" class="md-nav__link">
+        New BaseModel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-table-proxy/" class="md-nav__link">
+        Model Table Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-metaclass/" class="md-nav__link">
+        Model Metaclass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/excludable-items/" class="md-nav__link">
+        Excludable Items
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/traversible/" class="md-nav__link">
+        Traversible
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_3" type="checkbox" id="__nav_14_3" >
+      
+      <label class="md-nav__link" for="__nav_14_3">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_3">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/base-field/" class="md-nav__link">
+        Base Field
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/model-fields/" class="md-nav__link">
+        Model Fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/foreign-key/" class="md-nav__link">
+        Foreign Key
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/many-to-many/" class="md-nav__link">
+        Many To Many
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_4" type="checkbox" id="__nav_14_4" >
+      
+      <label class="md-nav__link" for="__nav_14_4">
+        Query Set
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Query Set" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_4">
+          <span class="md-nav__icon md-icon"></span>
+          Query Set
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/query-set/" class="md-nav__link">
+        Query Set
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/query/" class="md-nav__link">
+        Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/prefetch-query/" class="md-nav__link">
+        Prefetch Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/join/" class="md-nav__link">
+        Join
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/clause/" class="md-nav__link">
+        Clause
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/filter-query/" class="md-nav__link">
+        Filter Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/order-query/" class="md-nav__link">
+        Order Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/limit-query/" class="md-nav__link">
+        Limit Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/offset-query/" class="md-nav__link">
+        Offset Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/field-accessor/" class="md-nav__link">
+        Field Accessor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_5" type="checkbox" id="__nav_14_5" >
+      
+      <label class="md-nav__link" for="__nav_14_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation-manager/" class="md-nav__link">
+        Relation Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation/" class="md-nav__link">
+        Relation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation-proxy/" class="md-nav__link">
+        Relation Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/queryset-proxy/" class="md-nav__link">
+        Queryset Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/alias-manager/" class="md-nav__link">
+        Alias Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_6" type="checkbox" id="__nav_14_6" >
+      
+      <label class="md-nav__link" for="__nav_14_6">
+        Signals
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Signals" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_6">
+          <span class="md-nav__icon md-icon"></span>
+          Signals
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/signals/signal/" class="md-nav__link">
+        Signal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/signals/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#select_related" class="md-nav__link">
+    select_related
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select_all" class="md-nav__link">
+    select_all
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prefetch_related" class="md-nav__link">
+    prefetch_related
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select_related-vs-prefetch_related" class="md-nav__link">
+    select_related vs prefetch_related
+  </a>
+  
+    <nav class="md-nav" aria-label="select_related vs prefetch_related">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    Performance
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory" class="md-nav__link">
+    Memory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-methods" class="md-nav__link">
+    Model methods
+  </a>
+  
+    <nav class="md-nav" aria-label="Model methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#load" class="md-nav__link">
+    load
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#querysetproxy-methods" class="md-nav__link">
+    QuerysetProxy methods
+  </a>
+  
+    <nav class="md-nav" aria-label="QuerysetProxy methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select_related_1" class="md-nav__link">
+    select_related
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#select_all_1" class="md-nav__link">
+    select_all
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prefetch_related_1" class="md-nav__link">
+    prefetch_related
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/collerek/ormar/edit/master/docs/queries/joins-and-subqueries.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="joins-and-subqueries">Joins and subqueries</h1>
+<p>To join one table to another, so load also related models you can use following methods.</p>
+<ul>
+<li><code>select_related(related: Union[List, str]) -&gt; QuerySet</code></li>
+<li><code>select_all(follow: bool = True) -&gt; QuerySet</code></li>
+<li>
+<p><code>prefetch_related(related: Union[List, str]) -&gt; QuerySet</code></p>
+</li>
+<li>
+<p><code>Model</code></p>
+<ul>
+<li><code>Model.load()</code> method</li>
+</ul>
+</li>
+<li>
+<p><code>QuerysetProxy</code></p>
+<ul>
+<li><code>QuerysetProxy.select_related(related: Union[List, str])</code> method</li>
+<li><code>QuerysetProxy.select_all(follow: bool=True)</code> method</li>
+<li><code>QuerysetProxy.prefetch_related(related: Union[List, str])</code> method</li>
+</ul>
+</li>
+</ul>
+<h2 id="select_related">select_related</h2>
+<p><code>select_related(related: Union[List, str]) -&gt; QuerySet</code></p>
+<p>Allows to prefetch related models during the same query.</p>
+<p><strong>With <code>select_related</code> always only one query is run against the database</strong>, meaning
+that one (sometimes complicated) join is generated and later nested models are processed in
+python.</p>
+<p>To fetch related model use <code>ForeignKey</code> names.</p>
+<p>To chain related <code>Models</code> relation use double underscores between names.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are coming from <code>django</code> note that <code>ormar</code> <code>select_related</code> differs -&gt;
+in <code>django</code> you can <code>select_related</code>
+only singe relation types, while in <code>ormar</code> you can select related across <code>ForeignKey</code>
+relation, reverse side of <code>ForeignKey</code> (so virtual auto generated keys) and <code>ManyToMany</code>
+fields (so all relations as of current version).</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To control which model fields to select use <code>fields()</code>
+and <code>exclude_fields()</code> <code>QuerySet</code> methods.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To control order of models (both main or nested) use <code>order_by()</code> method.</p>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Album</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;albums&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">is_best_seller</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Track</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;tracks&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">album</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Album</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Album</span><span class="p">)</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+    <span class="n">play_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">album</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Album</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span><span class="s2">&quot;tracks&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="c1"># will return album will all columns tracks</span>
+</code></pre></div>
+</td></tr></table>
+<p>You can provide a string or a list of strings</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SchoolClass</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;schoolclasses&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">department</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Department</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Department</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Category</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;categories&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;students&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">schoolclass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SchoolClass</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">SchoolClass</span><span class="p">)</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Category</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Teacher</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;teachers&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">schoolclass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SchoolClass</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">SchoolClass</span><span class="p">)</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Category</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">classes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">SchoolClass</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;teachers__category&quot;</span><span class="p">,</span> <span class="s2">&quot;students&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="c1"># will return classes with teachers and teachers categories</span>
+<span class="c1"># as well as classes students</span>
+</code></pre></div>
+</td></tr></table>
+<p>Exactly the same behavior is for Many2Many fields, where you put the names of Many2Many
+fields and the final <code>Models</code> are fetched for you.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you set <code>ForeignKey</code> field as not nullable (so required) during all
+queries the not nullable <code>Models</code> will be auto prefetched, even if you do not include
+them in select_related.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All methods that do not return the rows explicitly returns a QueySet instance so
+you can chain them together</p>
+<p>So operations like <code>filter()</code>, <code>select_related()</code>, <code>limit()</code> and <code>offset()</code> etc. can be chained.</p>
+<p>Something like <code>Track.object.select_related("album").filter(album__name="Malibu").offset(1).limit(1).all()</code></p>
+</div>
+<h2 id="select_all">select_all</h2>
+<p><code>select_all(follow: bool = False) -&gt; QuerySet</code></p>
+<p>By default when you select <code>all()</code> none of the relations are loaded, likewise, 
+when <code>select_related()</code> is used you need to explicitly specify all relations that should
+be loaded. If you want to include also nested relations this can be cumberstone.</p>
+<p>That's why <code>select_all()</code> was introduced, so by default load all relations of a model 
+(so kind of opposite as with <code>all()</code> approach).</p>
+<p>By default adds only directly related models of a parent model (from which the query is run).</p>
+<p>If <code>follow=True</code> is set it adds also related models of related models.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>To not get stuck in an infinite loop as related models also keep a relation
+to parent model visited models set is kept.</p>
+<p>That way already visited models that are nested are loaded, but the load do not
+follow them inside. So Model A -&gt; Model B -&gt; Model C -&gt; Model A -&gt; Model X
+will load second Model A but will never follow into Model X.
+Nested relations of those kind need to be loaded manually.</p>
+</div>
+<p>With sample date like follow:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">database</span> <span class="o">=</span> <span class="n">databases</span><span class="o">.</span><span class="n">Database</span><span class="p">(</span><span class="n">DATABASE_URL</span><span class="p">,</span> <span class="n">force_rollback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">BaseMeta</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">ModelMeta</span><span class="p">):</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">BaseMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;addresses&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">street</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">post_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+
+<span class="k">class</span> <span class="nc">Branch</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">BaseMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;branches&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">address</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Company</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">BaseMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;companies&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;company_name&quot;</span><span class="p">)</span>
+    <span class="n">founded</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">branches</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ManyToMany</span><span class="p">(</span><span class="n">Branch</span><span class="p">)</span>  
+</code></pre></div>
+</td></tr></table>
+<p>To select all <code>Companies</code> with all <code>Branches</code> and <code>Addresses</code> you can simply query:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">companies</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Company</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_all</span><span class="p">(</span><span class="n">follow</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="c1"># which is equivalent to:</span>
+<span class="n">companies</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Company</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span><span class="s1">&#39;branches__address&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<p>Of course in this case it's quite easy to issue explicit relation names in <code>select_related</code>,
+but the benefit of <code>select_all()</code> shows when you have multiple relations. </p>
+<p>If for example <code>Company</code> would have 3 relations and all of those 3 relations have it's own 
+3 relations you would have to issue 9 relation strings to <code>select_related</code>, <code>select_all()</code>
+is also resistant to change in names of relations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that you can chain <code>select_all()</code> with other <code>QuerySet</code> methods like <code>filter</code>, <code>exclude_fields</code> etc.
+To exclude relations use <code>exclude_fields()</code> call with names of relations (also nested) to exclude.</p>
+</div>
+<h2 id="prefetch_related">prefetch_related</h2>
+<p><code>prefetch_related(related: Union[List, str]) -&gt; QuerySet</code></p>
+<p>Allows to prefetch related models during query - but opposite to <code>select_related</code> each
+subsequent model is fetched in a separate database query.</p>
+<p><strong>With <code>prefetch_related</code> always one query per Model is run against the database</strong>,
+meaning that you will have multiple queries executed one after another.</p>
+<p>To fetch related model use <code>ForeignKey</code> names.</p>
+<p>To chain related <code>Models</code> relation use double underscores between names.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To control which model fields to select use <code>fields()</code>
+and <code>exclude_fields()</code> <code>QuerySet</code> methods.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To control order of models (both main or nested) use <code>order_by()</code> method.</p>
+</div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Album</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;albums&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">is_best_seller</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Track</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;tracks&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">album</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Album</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Album</span><span class="p">)</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+    <span class="n">play_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">album</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Album</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">prefetch_related</span><span class="p">(</span><span class="s2">&quot;tracks&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="c1"># will return album will all columns tracks</span>
+</code></pre></div>
+</td></tr></table>
+<p>You can provide a string, or a list of strings</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SchoolClass</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;schoolclasses&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">department</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Department</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Department</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Category</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;categories&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;students&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">schoolclass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SchoolClass</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">SchoolClass</span><span class="p">)</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Category</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Teacher</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;teachers&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">schoolclass</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SchoolClass</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">SchoolClass</span><span class="p">)</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Category</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">classes</span> <span class="o">=</span> <span class="k">await</span> <span class="n">SchoolClass</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">prefetch_related</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;teachers__category&quot;</span><span class="p">,</span> <span class="s2">&quot;students&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="c1"># will return classes with teachers and teachers categories</span>
+<span class="c1"># as well as classes students</span>
+</code></pre></div>
+</td></tr></table>
+<p>Exactly the same behavior is for Many2Many fields, where you put the names of Many2Many
+fields and the final <code>Models</code> are fetched for you.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you set <code>ForeignKey</code> field as not nullable (so required) during all
+queries the not nullable <code>Models</code> will be auto prefetched, even if you do not include
+them in select_related.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All methods that do not return the rows explicitly returns a QueySet instance so
+you can chain them together</p>
+<p>So operations like <code>filter()</code>, <code>select_related()</code>, <code>limit()</code> and <code>offset()</code> etc. can be chained.</p>
+<p>Something like <code>Track.object.select_related("album").filter(album__name="Malibu").offset(1).limit(1).all()</code></p>
+</div>
+<h2 id="select_related-vs-prefetch_related">select_related vs prefetch_related</h2>
+<p>Which should you use -&gt; <code>select_related</code> or <code>prefetch_related</code>?</p>
+<p>Well, it really depends on your data. The best answer is try yourself and see which one
+performs faster/better in your system constraints.</p>
+<p>What to keep in mind:</p>
+<h3 id="performance">Performance</h3>
+<p><strong>Number of queries</strong>:
+<code>select_related</code> always executes one query against the database,
+while <code>prefetch_related</code> executes multiple queries. Usually the query (I/O) operation is
+the slowest one but it does not have to be.</p>
+<p><strong>Number of rows</strong>:
+Imagine that you have 10 000 object in one table A and each of those objects have 3
+children in table B, and subsequently each object in table B has 2 children in table C.
+Something like this:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>                     Model C
+                   /
+           Model B - Model C
+         / 
+Model A  - Model B - Model C
+       \           \ 
+        \            Model C
+         \
+           Model B - Model C
+                   \ 
+                     Model C
+</code></pre></div>
+</td></tr></table>
+<p>That means that <code>select_related</code> will always return 60 000 rows (10 000 * 3 * 2) later
+compacted to 10 000 models.</p>
+<p>How many rows will return <code>prefetch_related</code>?</p>
+<p>Well, that depends, if each of models B and C is unique it will return 10 000 rows in
+first query, 30 000 rows
+(each of 3 children of A in table B are unique) in second query and 60 000 rows (each of
+2 children of model B in table C are unique) in 3rd query.</p>
+<p>In this case <code>select_related</code> seems like a better choice, not only it will run one query
+comparing to 3 of
+<code>prefetch_related</code> but will also return 60 000 rows comparing to 100 000
+of <code>prefetch_related</code> (10+30+60k).</p>
+<p>But what if each Model A has exactly the same 3 models B and each models C has exactly
+same models C? <code>select_related</code>
+will still return 60 000 rows, while <code>prefetch_related</code> will return 10 000 for model A,
+3 rows for model B and 2 rows for Model C. So in total 10 006 rows. Now depending on the
+structure of models (i.e. if it has long Text() fields etc.) <code>prefetch_related</code>
+might be faster despite it needs to perform three separate queries instead of one.</p>
+<h4 id="memory">Memory</h4>
+<p><code>ormar</code> is a mini ORM meaning that it does not keep a registry of already loaded models.</p>
+<p>That means that in <code>select_related</code> example above you will always have 10 000 Models A,
+30 000 Models B
+(even if the unique number of rows in db is 3 - processing of <code>select_related</code> spawns <strong>
+new</strong> child models for each parent model). And 60 000 Models C.</p>
+<p>If the same Model B is shared by rows 1, 10, 100 etc. and you update one of those, the
+rest of rows that share the same child will <strong>not</strong> be updated on the spot. If you
+persist your changes into the database the change <strong>will be available only after reload
+(either each child separately or the whole query again)</strong>. That means
+that <code>select_related</code> will use more memory as each child is instantiated as a new object
+- obviously using it's own space.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This might change in future versions if we decide to introduce caching.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>By default all children (or event the same models loaded 2+ times) are
+completely independent, distinct python objects, despite that they represent the same
+row in db.</p>
+<p>They will evaluate to True when compared, so in example above: </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># will return True if child1 of both rows is the same child db row </span>
+<span class="n">row1</span><span class="o">.</span><span class="n">child1</span> <span class="o">==</span> <span class="n">row100</span><span class="o">.</span><span class="n">child1</span>
+
+<span class="c1"># same here:</span>
+<span class="n">model1</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Model</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">model2</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Model</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># same pk = same row in db</span>
+<span class="c1"># will return `True`</span>
+<span class="n">model1</span> <span class="o">==</span> <span class="n">model2</span>
+</code></pre></div>
+</td></tr></table>
+<p>but </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># will return False (note that id is a python `builtin` function not ormar one).</span>
+<span class="nb">id</span><span class="p">(</span><span class="n">row1</span><span class="o">.</span><span class="n">child1</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">ro100</span><span class="o">.</span><span class="n">child1</span><span class="p">)</span>
+
+<span class="c1"># from above - will also return False</span>
+<span class="nb">id</span><span class="p">(</span><span class="n">model1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">model2</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+<p>On the contrary - with <code>prefetch_related</code> each unique distinct child model is
+instantiated only once and the same child models is shared across all parent models.
+That means that in <code>prefetch_related</code> example above if there are 3 distinct models in
+table B and 2 in table C, there will be only 5 children nested models shared between all
+model A instances. That also means that if you update any attribute it will be updated
+on all parents as they share the same child object.</p>
+<h2 id="model-methods">Model methods</h2>
+<p>Each model instance have a set of methods to <code>save</code>, <code>update</code> or <code>load</code> itself.</p>
+<h3 id="load">load</h3>
+<p>You can load the <code>ForeignKey</code> related model by calling <code>load()</code> method.</p>
+<p><code>load()</code> can be used to refresh the model from the database (if it was changed by some other process).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Read more about <code>load()</code> method in <a href="../../models/methods/#load">models methods</a></p>
+</div>
+<h2 id="querysetproxy-methods">QuerysetProxy methods</h2>
+<p>When access directly the related <code>ManyToMany</code> field as well as <code>ReverseForeignKey</code>
+returns the list of related models.</p>
+<p>But at the same time it exposes subset of QuerySet API, so you can filter, create,
+select related etc related models directly from parent model.</p>
+<h3 id="select_related_1">select_related</h3>
+<p>Works exactly the same as <a href="./#select_related">select_related</a> function above but allows you to fetch related
+objects from other side of the relation.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To read more about <code>QuerysetProxy</code> visit <a href="../../relations/queryset-proxy/">querysetproxy</a> section</p>
+</div>
+<h3 id="select_all_1">select_all</h3>
+<p>Works exactly the same as <a href="./#select_all">select_all</a> function above but allows you to fetch related
+objects from other side of the relation.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To read more about <code>QuerysetProxy</code> visit <a href="../../relations/queryset-proxy/">querysetproxy</a> section</p>
+</div>
+<h3 id="prefetch_related_1">prefetch_related</h3>
+<p>Works exactly the same as <a href="./#prefetch_related">prefetch_related</a> function above but allows you to fetch related
+objects from other side of the relation.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To read more about <code>QuerysetProxy</code> visit <a href="../../relations/queryset-proxy/">querysetproxy</a> section</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../delete/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Delete data from database
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../filter-and-sort/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Filtering and sorting data
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="../../javascripts/config.js"></script>
+      
+    
+  </body>
+</html>

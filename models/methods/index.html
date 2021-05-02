@@ -1,0 +1,2110 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A simple async ORM with fastapi in mind and pydantic validation.">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Methods - ormar</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-72514911-3","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#model-methods" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ormar" class="md-header__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ormar
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Methods
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ormar" class="md-nav__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ormar
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Definition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inheritance/" class="md-nav__link">
+        Inheritance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Methods
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Methods
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic-methods" class="md-nav__link">
+    pydantic methods
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load" class="md-nav__link">
+    load
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load_all" class="md-nav__link">
+    load_all
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save" class="md-nav__link">
+    save
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    update
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upsert" class="md-nav__link">
+    upsert
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    delete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save_related" class="md-nav__link">
+    save_related
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migrations/" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/common-parameters/" class="md-nav__link">
+        Common parameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/field-types/" class="md-nav__link">
+        Fields types
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/pydantic-fields/" class="md-nav__link">
+        Pydantic only fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/encryption/" class="md-nav__link">
+        Fields encryption
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/postponed-annotations/" class="md-nav__link">
+        Postponed annotations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/foreign-key/" class="md-nav__link">
+        ForeignKey
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/many-to-many/" class="md-nav__link">
+        ManyToMany
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/queryset-proxy/" class="md-nav__link">
+        QuerySetProxy
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Queries
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Queries" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Queries
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/" class="md-nav__link">
+        Querying database with ormar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/create/" class="md-nav__link">
+        Insert data into database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/read/" class="md-nav__link">
+        Read data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/update/" class="md-nav__link">
+        Update data in database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/delete/" class="md-nav__link">
+        Delete data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/joins-and-subqueries/" class="md-nav__link">
+        Joins and subqueries
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/filter-and-sort/" class="md-nav__link">
+        Filtering and sorting data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/select-columns/" class="md-nav__link">
+        Selecting subset of columns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/pagination-and-rows-number/" class="md-nav__link">
+        Pagination and rows number
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/aggregations/" class="md-nav__link">
+        Aggregation functions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../signals/" class="md-nav__link">
+        Signals
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../transactions/" class="md-nav__link">
+        Transactions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fastapi/" class="md-nav__link">
+        Use with Fastapi
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mypy/" class="md-nav__link">
+        Use with mypy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin/" class="md-nav__link">
+        PyCharm plugin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      <label class="md-nav__link" for="__nav_14">
+        Api (BETA)
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Api (BETA)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Api (BETA)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2" type="checkbox" id="__nav_14_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_2">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_1" type="checkbox" id="__nav_14_2_1" >
+      
+      <label class="md-nav__link" for="__nav_14_2_1">
+        Helpers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Helpers" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Helpers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/models/" class="md-nav__link">
+        Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/pydantic/" class="md-nav__link">
+        Pydantic
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/sqlalchemy/" class="md-nav__link">
+        Sqlalchemy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/validation/" class="md-nav__link">
+        Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/related-names-validation/" class="md-nav__link">
+        Related names validation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_2" type="checkbox" id="__nav_14_2_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2_2">
+        Mixins
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Mixins" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mixins
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/alias-mixin/" class="md-nav__link">
+        Alias Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/excludable-mixin/" class="md-nav__link">
+        Excludable Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/merge-model-mixin/" class="md-nav__link">
+        Merge Model Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/prefetch-query-mixin/" class="md-nav__link">
+        Prefetch Query Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/relation-mixin/" class="md-nav__link">
+        Relation Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/save-prepare-mixin/" class="md-nav__link">
+        Save Prepare Mixin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-row/" class="md-nav__link">
+        Model Row
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/new-basemodel/" class="md-nav__link">
+        New BaseModel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-table-proxy/" class="md-nav__link">
+        Model Table Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-metaclass/" class="md-nav__link">
+        Model Metaclass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/excludable-items/" class="md-nav__link">
+        Excludable Items
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/traversible/" class="md-nav__link">
+        Traversible
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_3" type="checkbox" id="__nav_14_3" >
+      
+      <label class="md-nav__link" for="__nav_14_3">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_3">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/base-field/" class="md-nav__link">
+        Base Field
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/model-fields/" class="md-nav__link">
+        Model Fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/foreign-key/" class="md-nav__link">
+        Foreign Key
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/many-to-many/" class="md-nav__link">
+        Many To Many
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_4" type="checkbox" id="__nav_14_4" >
+      
+      <label class="md-nav__link" for="__nav_14_4">
+        Query Set
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Query Set" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_4">
+          <span class="md-nav__icon md-icon"></span>
+          Query Set
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/query-set/" class="md-nav__link">
+        Query Set
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/query/" class="md-nav__link">
+        Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/prefetch-query/" class="md-nav__link">
+        Prefetch Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/join/" class="md-nav__link">
+        Join
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/clause/" class="md-nav__link">
+        Clause
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/filter-query/" class="md-nav__link">
+        Filter Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/order-query/" class="md-nav__link">
+        Order Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/limit-query/" class="md-nav__link">
+        Limit Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/offset-query/" class="md-nav__link">
+        Offset Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/field-accessor/" class="md-nav__link">
+        Field Accessor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_5" type="checkbox" id="__nav_14_5" >
+      
+      <label class="md-nav__link" for="__nav_14_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation-manager/" class="md-nav__link">
+        Relation Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation/" class="md-nav__link">
+        Relation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation-proxy/" class="md-nav__link">
+        Relation Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/queryset-proxy/" class="md-nav__link">
+        Queryset Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/alias-manager/" class="md-nav__link">
+        Alias Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_6" type="checkbox" id="__nav_14_6" >
+      
+      <label class="md-nav__link" for="__nav_14_6">
+        Signals
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Signals" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_6">
+          <span class="md-nav__icon md-icon"></span>
+          Signals
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/signals/signal/" class="md-nav__link">
+        Signal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/signals/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pydantic-methods" class="md-nav__link">
+    pydantic methods
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load" class="md-nav__link">
+    load
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load_all" class="md-nav__link">
+    load_all
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save" class="md-nav__link">
+    save
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    update
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upsert" class="md-nav__link">
+    upsert
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    delete
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save_related" class="md-nav__link">
+    save_related
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/collerek/ormar/edit/master/docs/models/methods.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="model-methods">Model methods</h1>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Main interaction with the databases is exposed through a <code>QuerySet</code> object exposed on 
+each model as <code>Model.objects</code> similar to the django orm.</p>
+<p>To read more about <strong>quering, joining tables, excluding fields etc. visit <a href="../../queries/">queries</a> section.</strong></p>
+</div>
+<p>Each model instance have a set of methods to <code>save</code>, <code>update</code> or <code>load</code> itself.</p>
+<p>Available methods are described below.</p>
+<h2 id="pydantic-methods"><code>pydantic</code> methods</h2>
+<p>Note that each <code>ormar.Model</code> is also a <code>pydantic.BaseModel</code>, so all <code>pydantic</code> methods are also available on a model,
+especially <code>dict()</code> and <code>json()</code> methods that can also accept <code>exclude</code>, <code>include</code> and other parameters.</p>
+<p>To read more check <a href="https://pydantic-docs.helpmanual.io/">pydantic</a> documentation</p>
+<h2 id="load">load</h2>
+<p>By default when you query a table without prefetching related models, the ormar will still construct
+your related models, but populate them only with the pk value. You can load the related model by calling <code>load()</code> method.</p>
+<p><code>load()</code> can also be used to refresh the model from the database (if it was changed by some other process). </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">track</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Track</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="n">track</span><span class="o">.</span><span class="n">album</span><span class="o">.</span><span class="n">pk</span> <span class="c1"># will return malibu album pk (1)</span>
+<span class="n">track</span><span class="o">.</span><span class="n">album</span><span class="o">.</span><span class="n">name</span> <span class="c1"># will return None</span>
+
+<span class="c1"># you need to actually load the data first</span>
+<span class="k">await</span> <span class="n">track</span><span class="o">.</span><span class="n">album</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="n">track</span><span class="o">.</span><span class="n">album</span><span class="o">.</span><span class="n">name</span> <span class="c1"># will return &#39;Malibu&#39;</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="load_all">load_all</h2>
+<p><code>load_all(follow: bool = False, exclude: Union[List, str, Set, Dict] = None) -&gt; Model</code></p>
+<p>Method works like <code>load()</code> but also goes through all relations of the <code>Model</code> on which the method is called, 
+and reloads them from database.</p>
+<p>By default the <code>load_all</code> method loads only models that are directly related (one step away) to the model on which the method is called.</p>
+<p>But you can specify the <code>follow=True</code> parameter to traverse through nested models and load all of them in the relation tree.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To avoid circular updates with <code>follow=True</code> set, <code>load_all</code> keeps a set of already visited Models, 
+and won't perform nested <code>loads</code> on Models that were already visited.</p>
+<p>So if you have a diamond or circular relations types you need to perform the loads in a manual way.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># in example like this the second Street (coming from City) won&#39;t be load_all, so ZipCode won&#39;t be reloaded</span>
+<span class="n">Street</span> <span class="o">-&gt;</span> <span class="n">District</span> <span class="o">-&gt;</span> <span class="n">City</span> <span class="o">-&gt;</span> <span class="n">Street</span> <span class="o">-&gt;</span> <span class="n">ZipCode</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+<p>Method accepts also optional exclude parameter that works exactly the same as exclude_fields method in <code>QuerySet</code>.
+That way you can remove fields from related models being refreshed or skip whole related models.</p>
+<p>Method performs one database query so it's more efficient than nested calls to <code>load()</code> and <code>all()</code> on related models.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To read more about <code>exclude</code> read <a href="../../queries/select-columns/#exclude_fields">exclude_fields</a></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>All relations are cleared on <code>load_all()</code>, so if you exclude some nested models they will be empty after call.</p>
+</div>
+<h2 id="save">save</h2>
+<p><code>save() -&gt; self</code></p>
+<p>You can create new models by using <code>QuerySet.create()</code> method or by initializing your model as a normal pydantic model 
+and later calling <code>save()</code> method.</p>
+<p><code>save()</code> can also be used to persist changes that you made to the model, but only if the primary key is not set or the model does not exist in database.</p>
+<p>The <code>save()</code> method does not check if the model exists in db, so if it does you will get a integrity error from your selected db backend if trying to save model with already existing primary key. </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">track</span> <span class="o">=</span> <span class="n">Track</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">track</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c1"># will persist the model in database</span>
+
+<span class="n">track</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Track</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">track</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c1"># will raise integrity error as pk is populated</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="update">update</h2>
+<p><code>update(_columns: List[str] = None, **kwargs) -&gt; self</code></p>
+<p>You can update models by using <code>QuerySet.update()</code> method or by updating your model attributes (fields) and calling <code>update()</code> method.</p>
+<p>If you try to update a model without a primary key set a <code>ModelPersistenceError</code> exception will be thrown.</p>
+<p>To persist a newly created model use <code>save()</code> or <code>upsert(**kwargs)</code> methods.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">track</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Track</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">track</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird Strikes Again&#39;</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>To update only selected columns from model into the database provide a list of columns that should be updated to <code>_columns</code> argument.</p>
+<p>In example:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Movie</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;movies&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
+    <span class="n">year</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+    <span class="n">profit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Float</span><span class="p">()</span>
+
+<span class="n">terminator</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Movie</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Terminator&#39;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="mi">1984</span><span class="p">,</span> <span class="n">profit</span><span class="o">=</span><span class="mf">0.078</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="n">terminator</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Terminator 2&quot;</span>
+<span class="n">terminator</span><span class="o">.</span><span class="n">year</span> <span class="o">=</span> <span class="mi">1991</span>
+<span class="n">terminator</span><span class="o">.</span><span class="n">profit</span> <span class="o">=</span> <span class="mf">0.520</span>
+
+<span class="c1"># update only name</span>
+<span class="k">await</span> <span class="n">terminator</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+
+<span class="c1"># note that terminator instance was not reloaded so</span>
+<span class="k">assert</span> <span class="n">terminator</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">1991</span>
+
+<span class="c1"># but once you load the data from db you see it was not updated</span>
+<span class="k">await</span> <span class="n">terminator</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">terminator</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">1984</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition warning">
+<p class="admonition-title">Warning<p>Note that <code>update()</code> does not refresh the instance of the Model, so if you change more columns than you pass in <code>_columns</code> list your Model instance will have different values than the database!</p>
+</p>
+</div>
+<h2 id="upsert">upsert</h2>
+<p><code>upsert(**kwargs) -&gt; self</code></p>
+<p>It's a proxy to either <code>save()</code> or <code>update(**kwargs)</code> methods described above.</p>
+<p>If the primary key is set -&gt; the <code>update</code> method will be called.</p>
+<p>If the pk is not set the <code>save()</code> method will be called.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">track</span> <span class="o">=</span> <span class="n">Track</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">track</span><span class="o">.</span><span class="n">upsert</span><span class="p">()</span> <span class="c1"># will call save as the pk is empty</span>
+
+<span class="n">track</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Track</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">track</span><span class="o">.</span><span class="n">upsert</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird Strikes Again&#39;</span><span class="p">)</span> <span class="c1"># will call update as pk is already populated</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="delete">delete</h2>
+<p>You can delete models by using <code>QuerySet.delete()</code> method or by using your model and calling <code>delete()</code> method.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">track</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Track</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;The Bird&#39;</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">track</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span> <span class="c1"># will delete the model from database</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Note that that <code>track</code> object stays the same, only record in the database is removed.</p>
+</div>
+<h2 id="save_related">save_related</h2>
+<p><code>save_related(follow: bool = False, save_all: bool = False, exclude=Optional[Union[Set, Dict]]) -&gt; None</code></p>
+<p>Method goes through all relations of the <code>Model</code> on which the method is called, 
+and calls <code>upsert()</code> method on each model that is <strong>not</strong> saved. </p>
+<p>To understand when a model is saved check <a href="../models/index/#model-save-status">save status</a> section above.</p>
+<p>By default the <code>save_related</code> method saved only models that are directly related (one step away) to the model on which the method is called.</p>
+<p>But you can specify the <code>follow=True</code> parameter to traverse through nested models and save all of them in the relation tree.</p>
+<p>By default save_related saves only model that has not <code>saved</code> status, meaning that they were modified in current scope.</p>
+<p>If you want to force saving all of the related methods use <code>save_all=True</code> flag, which will upsert all related models, regardless of their save status.</p>
+<p>If you want to skip saving some of the relations you can pass <code>exclude</code> parameter. </p>
+<p><code>Exclude</code> can be a set of own model relations,
+or it can be a dictionary that can also contain nested items. </p>
+<div class="admonition note">
+<p class="admonition-title">Note<p>Note that <code>exclude</code> parameter in <code>save_related</code> accepts only relation fields names, so
+if you pass any other fields they will be saved anyway</p>
+</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note<p>To read more about the structure of possible values passed to <code>exclude</code> check <code>Queryset.fields</code> method documentation.</p>
+</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To avoid circular updates with <code>follow=True</code> set, <code>save_related</code> keeps a set of already visited Models on each branch of relation tree, 
+and won't perform nested <code>save_related</code> on Models that were already visited.</p>
+<p>So if you have circular relations types you need to perform the updates in a manual way.</p>
+</div>
+<p>Note that with <code>save_all=True</code> and <code>follow=True</code> you can use <code>save_related()</code> to save whole relation tree at once.</p>
+<p>Example:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Department</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">department_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Course</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">course_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Boolean</span><span class="p">()</span>
+    <span class="n">department</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Department</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Department</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">database</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">courses</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ManyToMany</span><span class="p">(</span><span class="n">Course</span><span class="p">)</span>
+
+<span class="n">to_save</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;department_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ormar&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;courses&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;course_name&quot;</span><span class="p">:</span> <span class="s2">&quot;basic1&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;completed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="s2">&quot;students&quot;</span><span class="p">:</span> <span class="p">[</span>
+                     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Jack&quot;</span><span class="p">},</span>
+                     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Abi&quot;</span><span class="p">}</span>
+                 <span class="p">]},</span>
+                <span class="p">{</span><span class="s2">&quot;course_name&quot;</span><span class="p">:</span> <span class="s2">&quot;basic2&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;completed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="s2">&quot;students&quot;</span><span class="p">:</span> <span class="p">[</span>
+                     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Kate&quot;</span><span class="p">},</span>
+                     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Miranda&quot;</span><span class="p">}</span>
+                 <span class="p">]</span>
+                 <span class="p">},</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+<span class="c1"># initializa whole tree</span>
+<span class="n">department</span> <span class="o">=</span> <span class="n">Department</span><span class="p">(</span><span class="o">**</span><span class="n">to_save</span><span class="p">)</span>
+
+<span class="c1"># save all at once (one after another)</span>
+<span class="k">await</span> <span class="n">department</span><span class="o">.</span><span class="n">save_related</span><span class="p">(</span><span class="n">follow</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">department_check</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Department</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">select_all</span><span class="p">(</span><span class="n">follow</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="n">to_exclude</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+    <span class="s2">&quot;courses&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+        <span class="s2">&quot;students&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;studentcourse&quot;</span><span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1"># after excluding ids and through models you get exact same payload used to</span>
+<span class="c1"># construct whole tree</span>
+<span class="k">assert</span> <span class="n">department_check</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="n">to_exclude</span><span class="p">)</span> <span class="o">==</span> <span class="n">to_save</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>save_related()</code> iterates all relations and all models and upserts() them one by one,
+so it will save all models but might not be optimal in regard of number of database queries.</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../inheritance/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Inheritance
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../migrations/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Migrations
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="../../javascripts/config.js"></script>
+      
+    
+  </body>
+</html>

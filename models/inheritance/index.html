@@ -1,0 +1,2395 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A simple async ORM with fastapi in mind and pydantic validation.">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Inheritance - ormar</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-72514911-3","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#inheritance" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ormar" class="md-header__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ormar
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Inheritance
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ormar" class="md-nav__button md-logo" aria-label="ormar" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ormar
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/collerek/ormar/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    collerek/ormar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Definition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Inheritance
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Inheritance
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-inheritance" class="md-nav__link">
+    Types of inheritance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mixins" class="md-nav__link">
+    Mixins
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concrete-table-inheritance" class="md-nav__link">
+    Concrete table inheritance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redefining-fields-in-subclasses" class="md-nav__link">
+    Redefining fields in subclasses
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relations-in-inheritance" class="md-nav__link">
+    Relations in inheritance
+  </a>
+  
+    <nav class="md-nav" aria-label="Relations in inheritance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#foreignkey-relations" class="md-nav__link">
+    ForeignKey relations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manytomany-relations" class="md-nav__link">
+    ManyToMany relations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/" class="md-nav__link">
+        Methods
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migrations/" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internals/" class="md-nav__link">
+        Internals
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/common-parameters/" class="md-nav__link">
+        Common parameters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/field-types/" class="md-nav__link">
+        Fields types
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/pydantic-fields/" class="md-nav__link">
+        Pydantic only fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fields/encryption/" class="md-nav__link">
+        Fields encryption
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/postponed-annotations/" class="md-nav__link">
+        Postponed annotations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/foreign-key/" class="md-nav__link">
+        ForeignKey
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/many-to-many/" class="md-nav__link">
+        ManyToMany
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../relations/queryset-proxy/" class="md-nav__link">
+        QuerySetProxy
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Queries
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Queries" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Queries
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/" class="md-nav__link">
+        Querying database with ormar
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/create/" class="md-nav__link">
+        Insert data into database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/read/" class="md-nav__link">
+        Read data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/update/" class="md-nav__link">
+        Update data in database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/delete/" class="md-nav__link">
+        Delete data from database
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/joins-and-subqueries/" class="md-nav__link">
+        Joins and subqueries
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/filter-and-sort/" class="md-nav__link">
+        Filtering and sorting data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/select-columns/" class="md-nav__link">
+        Selecting subset of columns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/pagination-and-rows-number/" class="md-nav__link">
+        Pagination and rows number
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../queries/aggregations/" class="md-nav__link">
+        Aggregation functions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../signals/" class="md-nav__link">
+        Signals
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../transactions/" class="md-nav__link">
+        Transactions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fastapi/" class="md-nav__link">
+        Use with Fastapi
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mypy/" class="md-nav__link">
+        Use with mypy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin/" class="md-nav__link">
+        PyCharm plugin
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../releases/" class="md-nav__link">
+        Release Notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      <label class="md-nav__link" for="__nav_14">
+        Api (BETA)
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Api (BETA)" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Api (BETA)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2" type="checkbox" id="__nav_14_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2">
+        Models
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Models" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_2">
+          <span class="md-nav__icon md-icon"></span>
+          Models
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_1" type="checkbox" id="__nav_14_2_1" >
+      
+      <label class="md-nav__link" for="__nav_14_2_1">
+        Helpers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Helpers" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Helpers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/models/" class="md-nav__link">
+        Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/pydantic/" class="md-nav__link">
+        Pydantic
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/relations/" class="md-nav__link">
+        Relations
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/sqlalchemy/" class="md-nav__link">
+        Sqlalchemy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/validation/" class="md-nav__link">
+        Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/helpers/related-names-validation/" class="md-nav__link">
+        Related names validation
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_2_2" type="checkbox" id="__nav_14_2_2" >
+      
+      <label class="md-nav__link" for="__nav_14_2_2">
+        Mixins
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Mixins" data-md-level="3">
+        <label class="md-nav__title" for="__nav_14_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Mixins
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/alias-mixin/" class="md-nav__link">
+        Alias Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/excludable-mixin/" class="md-nav__link">
+        Excludable Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/merge-model-mixin/" class="md-nav__link">
+        Merge Model Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/prefetch-query-mixin/" class="md-nav__link">
+        Prefetch Query Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/relation-mixin/" class="md-nav__link">
+        Relation Mixin
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/mixins/save-prepare-mixin/" class="md-nav__link">
+        Save Prepare Mixin
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model/" class="md-nav__link">
+        Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-row/" class="md-nav__link">
+        Model Row
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/new-basemodel/" class="md-nav__link">
+        New BaseModel
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-table-proxy/" class="md-nav__link">
+        Model Table Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/model-metaclass/" class="md-nav__link">
+        Model Metaclass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/excludable-items/" class="md-nav__link">
+        Excludable Items
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/models/traversible/" class="md-nav__link">
+        Traversible
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_3" type="checkbox" id="__nav_14_3" >
+      
+      <label class="md-nav__link" for="__nav_14_3">
+        Fields
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Fields" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_3">
+          <span class="md-nav__icon md-icon"></span>
+          Fields
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/base-field/" class="md-nav__link">
+        Base Field
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/model-fields/" class="md-nav__link">
+        Model Fields
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/foreign-key/" class="md-nav__link">
+        Foreign Key
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/many-to-many/" class="md-nav__link">
+        Many To Many
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/fields/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_4" type="checkbox" id="__nav_14_4" >
+      
+      <label class="md-nav__link" for="__nav_14_4">
+        Query Set
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Query Set" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_4">
+          <span class="md-nav__icon md-icon"></span>
+          Query Set
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/query-set/" class="md-nav__link">
+        Query Set
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/query/" class="md-nav__link">
+        Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/prefetch-query/" class="md-nav__link">
+        Prefetch Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/join/" class="md-nav__link">
+        Join
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/clause/" class="md-nav__link">
+        Clause
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/filter-query/" class="md-nav__link">
+        Filter Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/order-query/" class="md-nav__link">
+        Order Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/limit-query/" class="md-nav__link">
+        Limit Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/offset-query/" class="md-nav__link">
+        Offset Query
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/field-accessor/" class="md-nav__link">
+        Field Accessor
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/query-set/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_5" type="checkbox" id="__nav_14_5" >
+      
+      <label class="md-nav__link" for="__nav_14_5">
+        Relations
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Relations" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_5">
+          <span class="md-nav__icon md-icon"></span>
+          Relations
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation-manager/" class="md-nav__link">
+        Relation Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation/" class="md-nav__link">
+        Relation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/relation-proxy/" class="md-nav__link">
+        Relation Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/queryset-proxy/" class="md-nav__link">
+        Queryset Proxy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/alias-manager/" class="md-nav__link">
+        Alias Manager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/relations/utils/" class="md-nav__link">
+        Utils
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14_6" type="checkbox" id="__nav_14_6" >
+      
+      <label class="md-nav__link" for="__nav_14_6">
+        Signals
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Signals" data-md-level="2">
+        <label class="md-nav__title" for="__nav_14_6">
+          <span class="md-nav__icon md-icon"></span>
+          Signals
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/signals/signal/" class="md-nav__link">
+        Signal
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/signals/decorators/" class="md-nav__link">
+        Decorators
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-inheritance" class="md-nav__link">
+    Types of inheritance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mixins" class="md-nav__link">
+    Mixins
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concrete-table-inheritance" class="md-nav__link">
+    Concrete table inheritance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redefining-fields-in-subclasses" class="md-nav__link">
+    Redefining fields in subclasses
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relations-in-inheritance" class="md-nav__link">
+    Relations in inheritance
+  </a>
+  
+    <nav class="md-nav" aria-label="Relations in inheritance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#foreignkey-relations" class="md-nav__link">
+    ForeignKey relations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manytomany-relations" class="md-nav__link">
+    ManyToMany relations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/collerek/ormar/edit/master/docs/models/inheritance.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="inheritance">Inheritance</h1>
+<p>Out of various types of ORM models inheritance <code>ormar</code> currently supports two of them:</p>
+<ul>
+<li><strong>Mixins</strong></li>
+<li><strong>Concrete table inheritance</strong> (with parents set to <code>abstract=True</code>)</li>
+</ul>
+<h2 id="types-of-inheritance">Types of inheritance</h2>
+<p>The short summary of different types of inheritance is:</p>
+<ul>
+<li><strong>Mixins [SUPPORTED]</strong> - don't subclass <code>ormar.Model</code>, just define fields that are
+  later used on different models (like <code>created_date</code> and <code>updated_date</code> on each model),
+  only actual models create tables, but those fields from mixins are added</li>
+<li><strong>Concrete table inheritance [SUPPORTED]</strong> - means that parent is marked as abstract
+  and each child has its own table with columns from a parent and own child columns, kind
+  of similar to Mixins but parent also is a Model</li>
+<li><strong>Single table inheritance [NOT SUPPORTED]</strong> - means that only one table is created
+  with fields that are combination/sum of the parent and all children models but child
+  models use only subset of column in db (all parent and own ones, skipping the other
+  children ones)</li>
+<li><strong>Multi/ Joined table inheritance [NOT SUPPORTED]</strong> - means that part of the columns
+  is saved on parent model and part is saved on child model that are connected to each
+  other by kind of one to one relation and under the hood you operate on two models at
+  once</li>
+<li><strong>Proxy models [NOT SUPPORTED]</strong> - means that only parent has an actual table,
+  children just add methods, modify settings etc.</li>
+</ul>
+<h2 id="mixins">Mixins</h2>
+<p>To use Mixins just define a class that is not inheriting from an <code>ormar.Model</code> but is
+defining <code>ormar.Fields</code> as class variables.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># a mixin defines the fields but is a normal python class </span>
+<span class="k">class</span> <span class="nc">AuditMixin</span><span class="p">:</span>
+    <span class="n">created_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">updated_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;Sam&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DateFieldsMixins</span><span class="p">:</span>
+    <span class="n">created_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="n">updated_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+
+<span class="c1"># a models can inherit from one or more mixins</span>
+<span class="k">class</span> <span class="nc">Category</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">,</span> <span class="n">DateFieldsMixins</span><span class="p">,</span> <span class="n">AuditMixin</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">ModelMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;categories&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">code</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Note that Mixins are <strong>not</strong> models, so you still need to inherit
+from <code>ormar.Model</code> as well as define <code>Meta</code> class in the <strong>final</strong> model.</p>
+</div>
+<p>A Category class above will have four additional fields: <code>created_date</code>, <code>updated_date</code>,
+<code>created_by</code> and <code>updated_by</code>.</p>
+<p>There will be only one table created for model <code>Category</code> (<code>categories</code>), with <code>Category</code> class fields
+combined with all <code>Mixins</code> fields.</p>
+<p>Note that <code>Mixin</code> in class name is optional but is a good python practice.</p>
+<h2 id="concrete-table-inheritance">Concrete table inheritance</h2>
+<p>In concept concrete table inheritance is very similar to Mixins, but uses
+actual <code>ormar.Models</code> as base classes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note that base classes have <code>abstract=True</code> set in <code>Meta</code> class, if you try
+to inherit from non abstract marked class <code>ModelDefinitionError</code> will be raised.</p>
+</div>
+<p>Since this abstract Model will never be initialized you can skip <code>metadata</code>
+and <code>database</code> in it's <code>Meta</code> definition.</p>
+<p>But if you provide it - it will be inherited, that way you do not have to
+provide <code>metadata</code> and <code>databases</code> in the final/concrete class</p>
+<p>Note that you can always overwrite it in child/concrete class if you need to.</p>
+<p>More over at least one of the classes in inheritance chain have to provide both <code>database</code> and <code>metadata</code> -
+otherwise an error will be raised.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># note that base classes have abstract=True</span>
+<span class="c1"># since this model will never be initialized you can skip metadata and database</span>
+<span class="k">class</span> <span class="nc">AuditModel</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">created_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">updated_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;Sam&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># but if you provide it it will be inherited - DRY (Don&#39;t Repeat Yourself) in action</span>
+<span class="k">class</span> <span class="nc">DateFieldsModel</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+    <span class="n">created_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="n">updated_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+
+<span class="c1"># that way you do not have to provide metadata and databases in concrete class</span>
+<span class="k">class</span> <span class="nc">Category</span><span class="p">(</span><span class="n">DateFieldsModel</span><span class="p">,</span> <span class="n">AuditModel</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">ModelMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;categories&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">code</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<p>The list of inherited options/settings is as follows: <code>metadata</code>, <code>database</code>
+and <code>constraints</code>.</p>
+<p>Also methods decorated with <code>@property_field</code> decorator will be inherited/recognized.</p>
+<p>Of course apart from that all fields from base classes are combined and created in the
+concrete table of the final Model.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Note how you don't have to provide <code>abstarct=False</code> in the final class - it's the default setting
+that is not inherited.</p>
+</div>
+<h2 id="redefining-fields-in-subclasses">Redefining fields in subclasses</h2>
+<p>Note that you can redefine previously created fields like in normal python class
+inheritance.</p>
+<p>Whenever you define a field with same name and new definition it will completely replace
+the previously defined one.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># base class</span>
+<span class="k">class</span> <span class="nc">DateFieldsModel</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+        <span class="c1"># note that UniqueColumns need sqlalchemy db columns names not the ormar ones</span>
+        <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="n">ormar</span><span class="o">.</span><span class="n">UniqueColumns</span><span class="p">(</span><span class="s2">&quot;creation_date&quot;</span><span class="p">,</span> <span class="s2">&quot;modification_date&quot;</span><span class="p">)]</span>
+
+    <span class="n">created_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;creation_date&quot;</span>
+    <span class="p">)</span>
+    <span class="n">updated_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;modification_date&quot;</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">RedefinedField</span><span class="p">(</span><span class="n">DateFieldsModel</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">ModelMeta</span><span class="p">):</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;redefines&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># here the created_date is replaced by the String field</span>
+    <span class="n">created_date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;creation_date&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># you can verify that the final field is correctly declared and created</span>
+<span class="n">changed_field</span> <span class="o">=</span> <span class="n">RedefinedField</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model_fields</span><span class="p">[</span><span class="s2">&quot;created_date&quot;</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">changed_field</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="k">assert</span> <span class="n">changed_field</span><span class="o">.</span><span class="n">alias</span> <span class="o">==</span> <span class="s2">&quot;creation_date&quot;</span>
+<span class="k">assert</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;creation_date&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">RedefinedField</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+    <span class="n">RedefinedField</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="s2">&quot;creation_date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+    <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">sqltypes</span><span class="o">.</span><span class="n">String</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you declare <code>UniqueColumns</code> constraint with column names, the final model <strong>has to have</strong>
+a column with the same name declared. Otherwise, the <code>ModelDefinitionError</code> will be raised.</p>
+<p>So in example above if you do not provide <code>name</code> for <code>created_date</code> in <code>RedefinedField</code> model
+ormar will complain.</p>
+<p><code>created_date: str = ormar.String(max_length=200) # exception</code></p>
+<p><code>created_date: str = ormar.String(max_length=200, name="creation_date2") # exception</code></p>
+</div>
+<h2 id="relations-in-inheritance">Relations in inheritance</h2>
+<p>You can declare relations in every step of inheritance, so both in parent and child
+classes. </p>
+<p>When you define a relation on a child model level it's either overwriting the relation 
+defined in parent model (if the same field name is used), or is accessible only to this 
+child if you define a new relation.</p>
+<p>When inheriting relations, you always need to be aware of <code>related_name</code> parameter, that
+has to be unique across a related model, when you define multiple child classes that inherit the
+same relation.</p>
+<p>If you do not provide <code>related_name</code> parameter ormar calculates it for you. This works
+with inheritance as all child models have to have different class names, which are used
+to calculate the default <code>related_name</code> (class.name.lower()+'s').</p>
+<p>But, if you provide a <code>related_name</code> this name cannot be reused in all child models as
+they would overwrite each other on the related model side.</p>
+<p>Therefore, you have two options:</p>
+<ul>
+<li>redefine relation field in child models and manually provide different <code>related_name</code>
+  parameters</li>
+<li>let this for <code>ormar</code> to handle -&gt; auto adjusted related_name are: original
+  related_name + "_" + child model <strong>table</strong> name</li>
+</ul>
+<p>That might sound complicated but let's look at the following example:</p>
+<h3 id="foreignkey-relations">ForeignKey relations</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># normal model used in relation</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+
+<span class="c1"># parent model - needs to be abstract</span>
+<span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">owner</span><span class="p">:</span> <span class="n">Person</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Person</span><span class="p">)</span>
+    <span class="c1"># note that we refer to the Person model again so we **have to** provide related_name</span>
+    <span class="n">co_owner</span><span class="p">:</span> <span class="n">Person</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;coowned&quot;</span><span class="p">)</span>
+    <span class="n">created_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Truck</span><span class="p">(</span><span class="n">Car</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="n">max_capacity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Bus</span><span class="p">(</span><span class="n">Car</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="c1"># default naming is name.lower()+&#39;s&#39; so it&#39;s ugly for buss ;)</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;buses&quot;</span>
+
+    <span class="n">max_persons</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<p>Now when you will inspect the fields on Person model you will get:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Person</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model_fields</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">{&#39;id&#39;: &lt;class &#39;ormar.fields.model_fields.Integer&#39;&gt;, </span>
+<span class="sd">&#39;name&#39;: &lt;class &#39;ormar.fields.model_fields.String&#39;&gt;, </span>
+<span class="sd">&#39;trucks&#39;: &lt;class &#39;ormar.fields.foreign_key.ForeignKey&#39;&gt;, </span>
+<span class="sd">&#39;coowned_trucks&#39;: &lt;class &#39;ormar.fields.foreign_key.ForeignKey&#39;&gt;, </span>
+<span class="sd">&#39;buss&#39;: &lt;class &#39;ormar.fields.foreign_key.ForeignKey&#39;&gt;, </span>
+<span class="sd">&#39;coowned_buses&#39;: &lt;class &#39;ormar.fields.foreign_key.ForeignKey&#39;&gt;}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</code></pre></div>
+</td></tr></table>
+<p>Note how you have <code>trucks</code> and <code>buss</code> fields that leads to Truck and Bus class that
+this Person owns. There were no <code>related_name</code> parameter so default names were used.</p>
+<p>At the same time the co-owned cars need to be referenced by <code>coowned_trucks</code>
+and <code>coowned_buses</code>. Ormar appended <code>_trucks</code> and <code>_buses</code> suffixes taken from child
+model table names.</p>
+<p>Seems fine, but the default name for owned trucks is ok (<code>trucks</code>) but the <code>buss</code> is
+ugly, so how can we change it?</p>
+<p>The solution is pretty simple - just redefine the field in Bus class and provide
+different <code>related_name</code> parameter.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># rest of the above example remains the same</span>
+<span class="k">class</span> <span class="nc">Bus</span><span class="p">(</span><span class="n">Car</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;buses&quot;</span>
+
+    <span class="c1"># new field that changes the related_name</span>
+    <span class="n">owner</span><span class="p">:</span> <span class="n">Person</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;buses&quot;</span><span class="p">)</span>
+    <span class="n">max_persons</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<p>Now the columns looks much better.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Person</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model_fields</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">{&#39;id&#39;: &lt;class &#39;ormar.fields.model_fields.Integer&#39;&gt;, </span>
+<span class="sd">&#39;name&#39;: &lt;class &#39;ormar.fields.model_fields.String&#39;&gt;, </span>
+<span class="sd">&#39;trucks&#39;: &lt;class &#39;ormar.fields.foreign_key.ForeignKey&#39;&gt;, </span>
+<span class="sd">&#39;coowned_trucks&#39;: &lt;class &#39;ormar.fields.foreign_key.ForeignKey&#39;&gt;, </span>
+<span class="sd">&#39;buses&#39;: &lt;class &#39;ormar.fields.foreign_key.ForeignKey&#39;&gt;, </span>
+<span class="sd">&#39;coowned_buses&#39;: &lt;class &#39;ormar.fields.foreign_key.ForeignKey&#39;&gt;}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You could also provide <code>related_name</code> for the <code>owner</code> field, that way the proper suffixes
+would be added.</p>
+<p><code>owner: Person = ormar.ForeignKey(Person, related_name="owned")</code> </p>
+<p>and model fields for Person owned cars would become <code>owned_trucks</code> and <code>owned_buses</code>.</p>
+</div>
+<h3 id="manytomany-relations">ManyToMany relations</h3>
+<p>Similarly, you can inherit from Models that have ManyToMany relations declared but
+there is one, but substantial difference - the Through model. </p>
+<p>Since in the future the Through model will be able to hold additional fields and now it links only two Tables 
+(<code>from</code> and <code>to</code> ones), each child that inherits the m2m relation field has to have separate
+Through model. </p>
+<p>Of course, you can overwrite the relation in each Child model, but that requires additional
+code and undermines the point of the whole inheritance. <code>Ormar</code> will handle this for you if
+you agree with default naming convention, which you can always manually overwrite in 
+children if needed.</p>
+<p>Again, let's look at the example to easier grasp the concepts. </p>
+<p>We will modify the previous example described above to use m2m relation for co_owners.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># person remain the same as above</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># new through model between Person and Car2</span>
+<span class="k">class</span> <span class="nc">PersonsCar</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;cars_x_persons&quot;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+<span class="c1"># note how co_owners is now ManyToMany relation</span>
+<span class="k">class</span> <span class="nc">Car2</span><span class="p">(</span><span class="n">ormar</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="c1"># parent class needs to be marked abstract</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">db</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="c1"># note the related_name - needs to be unique across Person</span>
+    <span class="c1"># model, regardless of how many different models leads to Person</span>
+    <span class="n">owner</span><span class="p">:</span> <span class="n">Person</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Person</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;owned&quot;</span><span class="p">)</span>
+    <span class="n">co_owners</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Person</span><span class="p">]</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">ManyToMany</span><span class="p">(</span>
+        <span class="n">Person</span><span class="p">,</span> <span class="n">through</span><span class="o">=</span><span class="n">PersonsCar</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s2">&quot;coowned&quot;</span>
+    <span class="p">)</span>
+    <span class="n">created_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+
+<span class="c1"># child models define only additional Fields</span>
+<span class="k">class</span> <span class="nc">Truck2</span><span class="p">(</span><span class="n">Car2</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="c1"># note how you don&#39;t have to provide inherited Meta params</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;trucks2&quot;</span>
+
+    <span class="n">max_capacity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Bus2</span><span class="p">(</span><span class="n">Car2</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;buses2&quot;</span>
+
+    <span class="n">max_persons</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ormar</span><span class="o">.</span><span class="n">Integer</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<p><code>Ormar</code> automatically modifies related_name of the fields to include the <strong>table</strong> name 
+of the children models. The dafault name is original related_name + '_' + child table name.</p>
+<p>That way for class Truck2 the relation defined in 
+<code>owner: Person = ormar.ForeignKey(Person, related_name="owned")</code> becomes <code>owned_trucks2</code></p>
+<p>You can verify the names by inspecting the list of fields present on <code>Person</code> model.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Person</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model_fields</span>
+<span class="p">{</span>
+<span class="c1"># note how all relation fields need to be unique on Person</span>
+<span class="c1"># regardless if autogenerated or manually overwritten</span>
+<span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">ormar</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">Integer</span><span class="s1">&#39;&gt;, </span>
+<span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">ormar</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">String</span><span class="s1">&#39;&gt;, </span>
+<span class="c1"># note that we expanded on previous example so all &#39;old&#39; fields are here</span>
+<span class="s1">&#39;trucks&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">ormar</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">foreign_key</span><span class="o">.</span><span class="n">ForeignKey</span><span class="s1">&#39;&gt;, </span>
+<span class="s1">&#39;coowned_trucks&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">ormar</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">foreign_key</span><span class="o">.</span><span class="n">ForeignKey</span><span class="s1">&#39;&gt;, </span>
+<span class="s1">&#39;buses&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">ormar</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">foreign_key</span><span class="o">.</span><span class="n">ForeignKey</span><span class="s1">&#39;&gt;, </span>
+<span class="s1">&#39;coowned_buses&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">ormar</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">foreign_key</span><span class="o">.</span><span class="n">ForeignKey</span><span class="s1">&#39;&gt;, </span>
+<span class="c1"># newly defined related fields</span>
+<span class="s1">&#39;owned_trucks2&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">ormar</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">foreign_key</span><span class="o">.</span><span class="n">ForeignKey</span><span class="s1">&#39;&gt;, </span>
+<span class="s1">&#39;coowned_trucks2&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">abc</span><span class="o">.</span><span class="n">ManyToMany</span><span class="s1">&#39;&gt;, </span>
+<span class="s1">&#39;owned_buses2&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">ormar</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">foreign_key</span><span class="o">.</span><span class="n">ForeignKey</span><span class="s1">&#39;&gt;, </span>
+<span class="s1">&#39;coowned_buses2&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">abc</span><span class="o">.</span><span class="n">ManyToMany</span><span class="s1">&#39;&gt;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+<p>But that's not all. It's kind of internal to <code>ormar</code> but affects the data structure in the database,
+so let's examine the through models for both <code>Bus2</code> and <code>Truck2</code> models.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Bus2</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model_fields</span><span class="p">[</span><span class="s1">&#39;co_owners&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">through</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">abc</span><span class="o">.</span><span class="n">PersonsCarBus2</span><span class="s1">&#39;&gt;</span>
+<span class="n">Bus2</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model_fields</span><span class="p">[</span><span class="s1">&#39;co_owners&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">through</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">tablename</span>
+<span class="s1">&#39;cars_x_persons_buses2&#39;</span>
+
+<span class="n">Truck2</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model_fields</span><span class="p">[</span><span class="s1">&#39;co_owners&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">through</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">abc</span><span class="o">.</span><span class="n">PersonsCarTruck2</span><span class="s1">&#39;&gt;</span>
+<span class="n">Truck2</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">model_fields</span><span class="p">[</span><span class="s1">&#39;co_owners&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">through</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">tablename</span>
+<span class="s1">&#39;cars_x_persons_trucks2&#39;</span>
+</code></pre></div>
+</td></tr></table>
+<p>As you can see above <code>ormar</code> cloned the Through model for each of the Child classes and added
+Child <strong>class</strong> name at the end, while changing the table names of the cloned fields
+the name of the <strong>table</strong> from the child is used.</p>
+<p>Note that original model is not only not used, the table for this model is removed from metadata:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Bus2</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;test_date_models&#39;</span><span class="p">,</span> <span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;subjects&#39;</span><span class="p">,</span> <span class="s1">&#39;persons&#39;</span><span class="p">,</span> <span class="s1">&#39;trucks&#39;</span><span class="p">,</span> <span class="s1">&#39;buses&#39;</span><span class="p">,</span> 
+           <span class="s1">&#39;cars_x_persons_trucks2&#39;</span><span class="p">,</span> <span class="s1">&#39;trucks2&#39;</span><span class="p">,</span> <span class="s1">&#39;cars_x_persons_buses2&#39;</span><span class="p">,</span> <span class="s1">&#39;buses2&#39;</span><span class="p">])</span>
+</code></pre></div>
+</td></tr></table>
+<p>So be aware that if you introduce inheritance along the way and convert a model into 
+abstract parent model you may lose your data on through table if not careful.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that original table name and model name of the Through model is never used.
+Only the cloned models tables are created and used.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note that each subclass of the Model that has <code>ManyToMany</code> relation defined generates
+a new <code>Through</code> model, meaning also <strong>new database table</strong>.</p>
+<p>That means that each time you define a Child model you need to either manually create
+the table in the database, or run a migration (with alembic).</p>
+</div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Definition
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../methods/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Methods
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="../../javascripts/config.js"></script>
+      
+    
+  </body>
+</html>
